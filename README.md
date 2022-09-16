@@ -1,1 +1,1 @@
-# metodos-estadisticos
+# metodos-estadis
