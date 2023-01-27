@@ -25,6 +25,14 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - XgBoost
 
 
+
+<ul>
+  <li><a href="https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipynb">- Regresión Logística</a></li>
+  
+
+https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipynb
+
+
 ## Textos de Referencia
 - Müller, A. C., & Guido, S. (2016). Introduction to machine learning with Python: a guide for data scientists. " O'Reilly Media, Inc.".
 - Sarkar, D., Bali, R., & Sharma, T. (2018). Practical Machine Learning with Python. A Problem-Solver's Guide to Building Real-World Intelligent Systems, New York: Springer-Verlag
