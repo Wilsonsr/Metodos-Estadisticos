@@ -9,7 +9,7 @@
 
 En el curso se construyen los fundamentos teóricos de los principales métodos de la estadística exploratoria multidimensional y se trabajan sus aplicaciones, utilizando software especializado de uso libre y comercial. Las prácticas se orientan a la aplicación de los métodos a situaciones reales que requieren apropiación de los contextos específicos, a partir de la revisión de artículos, para realizar interpretaciones adecuadas de los datos y del fenómeno en general. Para el aprendizaje de la aplicación de los métodos, el estudiante deberá realizar talleres utilizando el paquete estadístico
 
-
+- Introducción
 - Análisis de Componenetes Principales
 - Análisis de Correspondencias
 - Análisis de correspondencias Múltiples
@@ -17,6 +17,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - Agrupamiento de K-medias 
 - Agrupamiento Jerárquico
 - Aprendizaje supervisado: Clasificación y regresión
+- Regresión Logística
 - Árboles de decisión
 - Clasificadores de Naive Bayes
 - Máquinas de soporte vectorial
