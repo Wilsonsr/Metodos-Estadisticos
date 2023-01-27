@@ -2,7 +2,9 @@
 <div align='center'>
   
  # **Métodos Estadísticos** 
-  
+ Wilson Sandoval Rodriguez
+ 
+ wsandovalr@ucentral.edu.co
 </div>
 
 En el curso se construyen los fundamentos teóricos de los principales métodos de la estadística exploratoria multidimensional y se trabajan sus aplicaciones, utilizando software especializado de uso libre y comercial. Las prácticas se orientan a la aplicación de los métodos a situaciones reales que requieren apropiación de los contextos específicos, a partir de la revisión de artículos, para realizar interpretaciones adecuadas de los datos y del fenómeno en general. Para el aprendizaje de la aplicación de los métodos, el estudiante deberá realizar talleres utilizando el paquete estadístico
