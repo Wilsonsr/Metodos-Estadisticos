@@ -44,10 +44,10 @@ https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipy
 - Jiawei Han and Micheline Kamber, “Data Mining: Concepts and Techniques”, Morgan Kaufmann Publishers, 3rd ed, 2010.
 
 
-
+- <a href="https://docs.google.com/document/d/1YKko-qNjCaMQV5FCfTAANjCda-Mp_A3D/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true" > PDA </a>
 
 ## Evaluación
-En cada uno de los cortes las notas se distribuirán de la siguiente manera:
+En cada uno de los cortes las notas se distribuirán de la siguiente manera>
 
 |ACTIVIDAD|PORCENTAJE|
 |---|---|
