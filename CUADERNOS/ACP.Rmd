@@ -1,0 +1,536 @@
+---
+title: "Análisis de Componentes Principales"
+author: "Wilson Sandoval R"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+    toc: true
+---
+
+
+# **Análisis de Componentes Principales (ACP)**
+
+
+**Principal Component Analysis (PCA):**  método estadístico que permite simplificar la complejidad de espacios muestrales con muchas dimensiones a la vez que conserva su información. 
+
+- Dada una muestra de $n$ individuos cada uno con $p$ variables $(X_1, X_2, …, X_p)$, es decir, el espacio muestral tiene $p$ dimensiones. 
+
+- El PCA permite encontrar un número de factores subyacentes $(z<p)$ que explican aproximadamente lo mismo que las $p$ variables originales. 
+
+- Cada $z$  recibe el nombre de componente principal.
+
+- Una de las aplicaciones de PCA es la reducción de dimensionalidad (variables), perdiendo la menor cantidad de información (varianza) posible:
+
+
+- El PCA sirve como herramienta para la visualización de datos
+
+
+
+
+El análisis en componentes principales (ACP) se utiliza para describir tablas
+que tienen en las filas las unidades estadísticas, generalmente denominadas,
+**“individuos”**, y en las columnas las **variables de tipo continuo** que se han
+medido sobre los individuos. 
+
+Los objetivos del ACP son:
+
+- Comparar los individuos entre si. Las gráficas que se obtienen permiten
+observar la forma de la “nube de individuos”, lo que a su vez
+permite detectar patrones en ellos.
+- Describir las relaciones entre las variables.
+- Reducir la dimensión de la representación.  A mayor relación entre las
+variables mayor es la capacidad de síntesis del ACP y unos pocos ejes
+factoriales podrán resumir las variables originales.
+
+
+
+# Eingenvectores y eigenvalores
+
+Los eigenvectores y eigenvalores son  números y vectores asociados a matrices cuadradas. Dada una matriz $A$ de $n\times n$, su eigenvector $v$  de $n\times$ tal que
+
+
+
+$$Av =\lambda v$$ 
+
+
+- $\lambda$ es el eigenvalor, un valor escalar real asociado con el eigenvector.
+
+
+
+Ejemplo:  
+
+$$\begin{pmatrix} 2 & 3 \\ 2 & 1 \end{pmatrix}  \begin{pmatrix} 3 \\ 2 \end{pmatrix} = \begin{pmatrix} 12 \\ 8 \end{pmatrix} = 4  \begin{pmatrix} 3 \\ 2 \end{pmatrix}$$
+
+en R los puede calcular con la funcion    `eigen`
+
+
+**Ejercicio:**
+
+- Defina la matriz y guardela con el nombre  $B$
+
+
+```{r}
+#Escriba su código
+```
+
+- Calcular los eingevalores e ingevectores
+
+
+```{r}
+# Escriba su código
+```
+## Propiedades de los eigenvectores 
+
+- Solo las matrices cuadradas tienen eigenvectores, pero no todas las matrices cuadradas los tienen. 
+
+- Dada una matriz $n\times n$ con eigenvectores, el número existente de ellos es $n$.
+
+- Todos los eigenvectores de una matriz son perpendiculares. Esto significa que podemos expresar los datos respecto a estos eigenvectores.
+
+
+-  **Un eigenvalor > 1** indica que la componente principal explica más varianza de lo que lo hace una de las variables originales, estando los datos estandarizados.
+
+
+## ESTANDARIZACIÓN DE LAS VARIABLES
+
+- El cálculo de los componentes principales depende de las unidades de medida empleadas en las variables. 
+
+- Es importante, antes de aplicar el PCA, estandarizar las variables para que tengan media 0 y desviación estándar 1
+
+
+$$\frac{x_i−media(x)}{sd(x)}$$
+
+
+## Interpretación geométrica de las componentes principales
+
+
+Una forma intuitiva de entender el proceso de PCA consiste en interpretar las componentes principales desde un punto de vista geométrico.
+
+
+![](https://profesordata.com/wp-content/uploads/2020/09/Interpretacion_Geometrica_de_las_componentes_principales_1.png)
+
+
+## Cálculo de las componentes principales
+
+
+- Cada componente principal ($Z_i$) se obtiene por combinación lineal de las variables originales.  
+
+- La primera componente principal de un grupo de variables $(X_1, X_2, …, X_p)$ es la combinación lineal normalizada de dichas variables que tiene mayor varianza:
+
+
+$$Z_1=\phi_{11} X_1 + \phi_{21}X_2+  ... + \phi_{p1}X_p$$
+con la condición 
+
+$$\displaystyle\sum_{j=1}^p \phi^{2}_{j1}= 1$$
+En general 
+$$
+Z_{m}=\sum_{j=1}^{p} \phi_{j m} X_{j}
+$$
+
+- $\phi_{1m},\phi_{2m},...,\phi_{pm}$ son las cargas o  `loadings` de los componentes principales 
+
+
+
+
+
+
+- La primera componente principal ($Z_1$) es aquella cuya dirección refleja o contiene la mayor variabilidad en los datos. 
+
+- Este vector define la línea lo más próxima posible a los datos y que minimiza la suma de las distancias perpendiculares entre cada dato y la línea representada por la componente (usando como medida de cercanía el promedio de la distancia euclídea al cuadrado):
+
+
+
+$$
+z_{i1}=\phi_{11} x_{i 1}+\phi_{21} x_{i 2}+\ldots+\phi_{p 1} x_{i p}
+$$
+donde $\phi_{11}$ corresponde al primer loading de la primera componente principal.
+
+En otras palabras, el vector de loadings de la primera componente principal resuelve el problema de optimización
+
+$$
+\underset{\phi_{11}, \ldots, \phi_{p 1}}{\operatorname{maximize}}\left\{\frac{1}{n} \sum_{i=1}^{n}\left(\sum_{j=1}^{p} \phi_{j 1} x_{i j}\right)^{2}\right\}
+$$
+$$ \text { sujeto a } \sum_{j=1}^{p} \phi_{j 1}^{2}=1 $$
+- La segunda componente principal ($Z_2$) será una combinación lineal de las variables, que recoja la segunda dirección con mayor varianza de los datos, pero que no esté correlacionada con $Z_1$. Esta condición es equivalente a decir que la dirección de $Z_2$ (vector $\phi_{2}$) ha de ser perpendicular u ortogonal respecto a $Z_1$ (vector $\phi_1$).
+
+## Proporción de la varianza explicada
+
+
+
+- **¿Cuánta información presente en el set de datos original se pierde al proyectar las observaciones en un espacio de menor dimensión?**
+
+- **¿Cuanta información es capaz de capturar cada una de las componentes principales obtenidas?**
+
+
+Asumiendo que las variables se han normalizado para tener media cero, la varianza total presente en el set de datos se define como
+
+$$\displaystyle\sum_{j=1}^p Var(X_j) = \displaystyle\sum_{j=1}^p \frac{1}{n} \displaystyle\sum_{i=1}^n x^{2}_{ij} $$
+
+ la varianza explicada por la componente $m$ es:
+ 
+ $$\frac{1}{n} \sum_{i=1}^n z^{2}_{im} = \frac{1}{n} \sum_{i=1}^n  \left( \sum_{j=1}^p \phi_{jm}x_{ij} \right)^2$$
+La proporción de varianza explicada por la componente $m$ es:
+ 
+$$\frac{\sum_{i=1}^n  \left( \sum_{j=1}^p \phi_{jm}x_{ij} \right)^2} {\sum_{j=1}^p \sum_{i=1}^n x^{2}_{ij}}$$
+
+### Algunos comandos en R
+
+- `library(stats)`
+
+  + `prcomp()` -> Forma rápida de implementar PCA sobre una matriz de datos.
+
+  + `princomp()`
+
+- `library(FactoMineR)`
+
+  + `PCA()` -> PCA con resultados más detallados. 
+  + Los valores ausentes se reemplazan por la media de cada columna. 
+  + Pueden incluirse variables categóricas suplementarias. 
+  + Estandariza automáticamente los datos.
+
+- `library(factoextra)`
+
+  + `get_pca()` -> Extrae la información sobre las observaciones y variables de un análisis PCA.
+
+  + `get_pca_var()` -> Extrae la información sobre las variables.
+
+  + `get_pca_ind()` -> Extrae la información sobre las observaciones.
+
+
+
+#### Visualizaciones:
+
+- `library(FactoMineR)`
+
+  + `fviz_pca_ind()` -> Representación de observaciones sobre componentes principales.
+
+  + `fviz_pca_var()` -> Representación de variables sobre componentes principales.
+
+  + `fviz_screeplot()` -> Representación (gráfico barras) de eigenvalores.
+
+  + `fviz_contrib()` -> Representa la contribución de filas/columnas de los resultados de un pca.
+
+
+
+| Matrix| Alien| Serenity | Casablanca | Amelie| 
+|---|---|---|---|---|
+|1|1|1|0|0|
+|3|3|3|0|0|
+|4|4|4|0|0|
+|5|5|5|0|0|
+|0|2|0|4|4|
+|0|0|0|5|5|
+|0|1|0|2|2|
+
+
+Realice análisis de componentes de componentes principales para la base de películas
+y usuarios usando los paquetes "FACTO"
+
+
+
+- **Ejercicio:**
+
+Defina una matriz llamela $A$, los nombres de las columnas "Matrix", "Alien", "Serenity","Casablanca", "Amelie"  nombres de los individuos "Pedro","Adriana", "Teo", "Andres", "Manuel", "Javier", "Maria"
+
+```{r}
+# Escriba su código
+
+```
+
+- Correlacion entre las variables
+
+```{r}
+#cor(A)
+```
+
+```{r}
+library(psych)
+#corPlot(A)
+```
+
+
+
+
+
+```{r, message=FALSE}
+library("factoextra")
+library("FactoMineR")
+```
+
+
+
+```{r}
+#peliculas_pca=PCA(A, graph = F)
+#peliculas_pca
+```
+
+```{r}
+#class(peliculas_pca)
+```
+
+```{r}
+#peliculas_pca$var$coord
+```
+
+
+```{r}
+#peliculas_pca
+```
+
+
+
+```{r}
+#get_eigenvalue(peliculas_pca)
+```
+
+```{r}
+#peliculas_pca$eig
+```
+
+
+
+```{r}
+#fviz_eig(peliculas_pca, addlabels=T)
+```
+
+- Se puede observar tanto en la tabla como en el anterior gráfico  que las componentes $1$ y 2 son las más significativas ya que  capturan el 98% de las varianzas de las variables.
+
+```{r}
+#fviz_pca_var(peliculas_pca,repel = T, colvar="cos2", col.var = "contrib", alpha.var = "contrib", gradient.cols=c("#FF0000","#FFFF00","#00FF00"))
+```
+
+
+**Analisis**
+
+
+- Podemos visualizar que las variables están bien representadas sobre la dimensión $1$, ya que su magnitud es considerablemente grande.
+
+
+
+- Se  visualiza que las películas Alien, Matrix y Serenity son películas que tienen bastante ciencia ficción y están bien representadas  sobre la dimensión $1$ (Ciencia ficción)  mientras que Amelie y Casablanca carecen de esta pues están en el sentido opuesto y las usaremos para representar la  dimensión 2 (Películas de romance).
+
+
+ - Por otro lado podemos observar que todas las películas tienen de alguna forma algo de romance.
+
+
+- Las cantidades numéricas que corroboran estas afirmaciones se pueden ver en las siguientes gráficos y tablas donde se  muestran las coordenadas y las contribuciones.
+
+
+
+```{r}
+library("corrplot")
+```
+
+```{r}
+#get_pca_var(peliculas_pca)
+```
+
+
+```{r}
+#get_pca_var(peliculas_pca)$coord[,1:3]
+```
+
+
+```{r}
+#get_pca_var(peliculas_pca)$contrib[,1:5]
+```
+
+
+
+```{r}
+#corrplot(get_pca_var(peliculas_pca)$cos2)
+
+```
+Contribuciónn de cada variable a las componentes principales (cada película) en cada concepto(en cada componente principal)
+
+Prueba que cada variable aporta un porcentaje en cada componente. La suma es $100
+
+```{r}
+#colSums(get_pca_var(peliculas_pca)$contrib)
+```
+
+
+
+### gráfica para mirar la contibucion de las variables al pca
+
+
+
+```{r}
+#fviz_contrib(peliculas_pca, choice = "var", axes=1)
+```
+
+
+```{r}
+#fviz_contrib(peliculas_pca, choice = "var", axes=2)
+```
+
+
+```{r}
+#fviz_contrib(peliculas_pca, choice = "var", axes=3)
+```
+
+
+
+```{r}
+#fviz_pca_biplot(peliculas_pca)
+```
+
+
+A partir del anterior gráfico se puede decir
+
+
+- Andres y Teo les gusta las pel?culas de ciencia ficción.
+- Javier y Manuel les gusta las películas que contienen poca ciencia ficción porque están al lado opuesto en la dimensión $1$.
+- Pedro es neutral respecto a las películas de ciencia ficción y no es afínn con las películas de romance.
+
+```{r}
+#A=as.data.frame(A)
+```
+
+
+```{r}
+#library(GGally)
+#ggpairs(A)
+```
+
+
+
+# PCA base Iris
+
+
+```{r}
+library(dplyr)
+```
+
+
+```{r}
+data("iris")
+
+iris %>%  head(200) %>%
+  select(1:5) %>%
+  DT::datatable()
+```
+
+Elegimos las variables cuantitativas
+
+```{r}
+Iris=iris[,1:4]
+```
+
+
+```{r}
+library(psych)
+
+corPlot(Iris, cex = 1.2, main = "Matriz de correlación")
+```
+
+
+
+```{r}
+Iris_pca=PCA(Iris, graph = F)
+```
+
+```{r}
+get_eigenvalue(Iris_pca)
+```
+
+
+```{r}
+fviz_eig(Iris_pca, addlabels=T)
+
+```
+
+
+- Podemos observar que los componentes $1$ y 2 son las más significativas. Capturan casi el 96% de las varianzas de las variables.
+
+
+```{r}
+fviz_pca_var(Iris_pca,repel = T, colvar="cos2", col.var = "contrib", alpha.var = "contrib", gradient.cols=c("#FF0000","#FFFF00","#00FF00"))
+```
+
+- **Interpretación**
+
+- Podemos notar que el ancho y la longitud de los pétalos están altamente correlacionadas y su variabilidad a través de las tres especies Iris se explica principalmente por el componente $1$(Pétalo), que también explica una gran parte de la variabilidad en la longitud del sépalo.
+
+- La componente principal 2 explica principalmente el ancho del sépalo.
+
+
+
+```{r}
+library(corrplot)
+corrplot(get_pca_var(Iris_pca)$cos2)
+```
+
+
+- La anterior gráfica corrobora que la dimensión explica muy bien las variables Longitud del petalo, ancho del petalo y longitud del sepalo,  mientras que la dimension 2 explica el ancho del sepalo. 
+
+
+### Analisis de variables cualitativas
+
+no se toman en cuanta para pca  es para un análisis posterior
+```{r}
+iris_pca_anal_sup=PCA(iris, quali.sup = 5, graph = F)
+iris_pca_anal_sup$var$coord
+```
+
+```{r}
+iris_pca_anal_sup$quali.sup
+```
+
+
+Visualizar todas las variables en un solo gráfico
+
+```{r}
+fviz_pca_var(iris_pca_anal_sup)
+```
+
+```{r}
+fviz_pca_var(iris_pca_anal_sup, axes=c(1,3), geom = c("arrow", "text") )
+```
+
+
+como mostrar las variables cualitativas, en este caso las competencias
+
+```{r}
+fviz_pca_ind(iris_pca_anal_sup, addEllipses = T, habillage = 5)
+```
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(data=iris, aes(x=Species, y=Petal.Width, fill=Species))+
+  geom_boxplot()
+  
+```
+
+
+```{r}
+fviz_pca_biplot(iris_pca_anal_sup,  habillage = 5)
+```
+
+- En los dos anteriores gr?ficos observamos que hay una gran diferencia entre las flores iris de la especie setosa y las de las especies versicolor y virginica esta diferencia se da en la dimensión $1$ que representa el ancho y la longitud del petalo  y ls longitud del sepalo.
+
+
+
+A continuación se puede visualizar las correlaciones graficamente de cada una de las variables.
+
+```{r}
+pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species",
+      pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
+```
+
+```{r, message=FALSE}
+library(ggplot2)
+library(GGally)
+```
+
+```{r}
+ggpairs(iris[,1:4], mapping = aes(color=iris$Species))
+```
+
+
+
+
