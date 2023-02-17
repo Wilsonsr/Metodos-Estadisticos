@@ -12,6 +12,9 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - <a href="https://docs.google.com/presentation/d/1_vM4DL3IyQP5V88yPz1E85MJCFot9afq/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> Introducción </a>
 -  <a href= "https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ACP.Rmd"> Análisis de Componenetes Principales </a>
     + <a href="https://rpubs.com/wilsonsr/1001461"> Rpubs </a>
+    + <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/homicidiosacp.Rmd"> pcadelitos </a>
+    
+    
 - Análisis de Correspondencias
 - Análisis de correspondencias Múltiples
 - Análisis Factorial
