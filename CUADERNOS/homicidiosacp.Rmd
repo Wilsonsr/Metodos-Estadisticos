@@ -1,0 +1,254 @@
+---
+title: "ACP homicidios"
+author: "wilson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, message=FALSE}
+library(FactoMineR)
+library(FactoClass)
+library(FactoClass)
+library(factoextra)
+library(corrplot)
+library(rio)
+Delitos <- rio::import("https://github.com/Wilsonsr/Metodos-Estadisticos/raw/main/BASES/Delitos_Colombia.csv", sep=";")
+```
+
+
+```{r}
+library(DT)
+DT::datatable(Delitos)
+```
+
+```{r}
+rownames(Delitos)=Delitos[,1]
+```
+
+
+```{r}
+str(Delitos)
+```
+
+
+
+```{r}
+library(psych)
+A=cor(Delitos[,c(2,3,4,5,6,7)])
+corrplot(A)
+```
+
+
+
+
+```{r, message=FALSE}
+library(raster)
+colombia_pais <- getData(name = "GADM", country = "COL", level = 0)
+class(colombia_pais)
+#plot(colombia_pais)
+```
+
+
+
+
+
+
+```{r}
+colombia_depto <- getData(name = "GADM", country = "COL", level = 1)
+#plot(colombia_depto)
+
+```
+
+```{r}
+colombia_depto2 <- rio::import("https://github.com/Wilsonsr/Metodos-Estadisticos/raw/main/BASES/gadm36_COL_1_sp.rds")
+#plot(colombia_depto2)
+
+```
+
+
+
+```{r, message=FALSE}
+library(sf)
+library(rgeos)
+prueba <- st_as_sf(colombia_depto2)
+head(prueba, 10)
+
+```
+
+
+
+
+```{r}
+
+Delitos$Departamento[Delitos$Departamento=="Valle_del_Cauca"]<-"Valle del Cauca"
+Delitos$Departamento[Delitos$Departamento=="San_Andres"]<-"San Andrés y Providencia"
+Delitos$Departamento[Delitos$Departamento=="La_Guajira"]<-"La Guajira"
+Delitos$Departamento[Delitos$Departamento=="narigno"]<-"Nariño"
+Delitos$Departamento[Delitos$Departamento=="Norte_de_Santander"]<-"Norte de Santander"
+Delitos$Departamento[Delitos$Departamento=="Choco"]<-"Chocó"
+Delitos$Departamento[Delitos$Departamento=="Cordoba"]<-"Córdoba"
+Delitos$Departamento[Delitos$Departamento=="Vaupes"]<-"Vaupés"
+Delitos$Departamento[Delitos$Departamento=="Bolivar"]<-"Bolívar"
+Delitos$Departamento[Delitos$Departamento=="Guainia"]<-"Guainía"
+Delitos$Departamento[Delitos$Departamento=="Boyaca"]<-"Boyacá"
+Delitos$Departamento[Delitos$Departamento=="Atlantico"]<-"Atlántico"
+Delitos$Departamento[Delitos$Departamento=="Caqueta"]<-"Caquetá"
+
+```
+
+
+
+```{r, message=FALSE}
+library(scales)
+library(ggplot2)
+library(dplyr)
+prueba %>% 
+  rename(Departamento = NAME_1) %>% 
+  left_join(y = Delitos, by = "Departamento") %>% 
+  ggplot(mapping = aes(fill =Delitos_Sexuales)) +
+  geom_sf(color = "white") +
+  scale_fill_viridis_c(
+    trans = "log10",
+    breaks = trans_breaks(trans = "log10",
+                          inv = function(x) round(10 ^ x, digits = 1))
+  ) +
+  theme_void()
+
+```
+
+
+
+
+```{r, message=FALSE}
+library(scales)
+library(ggplot2)
+library(dplyr)
+prueba %>% 
+  rename(Departamento = NAME_1) %>% 
+  left_join(y = Delitos, by = "Departamento") %>% 
+  ggplot(mapping = aes(fill =Homicidios)) +
+  geom_sf(color = "white") +
+  scale_fill_viridis_c(
+    trans = "log10",
+    breaks = trans_breaks(trans = "log10",
+                          inv = function(x) round(10 ^ x, digits = 1))
+  ) +
+  theme_void()
+
+```
+
+Construimos el PCA
+
+```{r}
+pca_delitos=PCA(Delitos[,2:7], graph = F)
+```
+
+```{r}
+get_eigenvalue(pca_delitos)
+```
+
+
+```{r}
+fviz_eig(pca_delitos, addlabels = T)
+```
+
+
+
+```{r}
+get_eigenvalue(pca_delitos)
+```
+
+
+```{r}
+fviz_eig(pca_delitos, addlabels=T)
+
+```
+
+
+- Podemos observar que los componentes $1$ y $2$ son las más significativas. Capturan casi el 96% de las varianzas de las variables.
+
+
+```{r}
+fviz_pca_var(pca_delitos,repel = T, colvar="cos2", col.var = "contrib", alpha.var = "contrib", gradient.cols=c("#FF0000","#FFFF00","#00FF00"))
+```
+
+- **Interpretación**
+
+
+
+
+
+```{r}
+library(corrplot)
+corrplot(get_pca_var(pca_delitos)$cos2)
+```
+
+
+- La anterior gráfica 
+
+```{r}
+get_pca_var(pca_delitos)
+```
+
+
+```{r}
+get_pca_var(pca_delitos)$coord[,1:5]
+```
+
+
+```{r}
+get_pca_var(pca_delitos)$contrib[,1:5]
+```
+
+
+
+```{r}
+corrplot(get_pca_ind(pca_delitos)$cos2)
+
+```
+Contribuciónn de cada variable a las componentes principales (cada película) en cada concepto(en cada componente principal)
+
+Prueba que cada variable aporta un porcentaje en cada componente. La suma es $100
+
+```{r}
+colSums(get_pca_var(pca_delitos)$contrib)
+```
+
+
+
+### gráfica para mirar la contibucion de las variables al pca
+
+
+
+```{r}
+fviz_contrib(pca_delitos, choice = "var", axes=1)
+```
+
+
+```{r}
+fviz_contrib(pca_delitos, choice = "var", axes=2)
+```
+
+
+
+
+```{r}
+fviz_pca_biplot(pca_delitos)
+```
+
+
+
+```{r, message=FALSE}
+library(ggplot2)
+library(GGally)
+```
+
+```{r}
+ggpairs(Delitos[,2:7])
+```
+
+
+
+
+
+
