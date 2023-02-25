@@ -1,0 +1,191 @@
+---
+title: "ANÁLISIS DE CORRESPONDENCIAS MÚLTIPLES"
+author: "Wilson Sandoval Rodríguez"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+    toc: true
+---
+
+## ANALISIS DE CORRESPONDENCIAS MULTIPLES (MCA)
+
+
+El análisis de correspondencia múltiple (MCA) es una extensión del análisis de correspondencia simple para resumir y visualizar una tabla de datos que contiene más de dos variables categóricas. También puede verse como una generalización del análisis de componentes principales cuando las variables a analizar son categóricas en lugar de cuantitativas.
+
+
+
+MCA se usa generalmente para analizar un conjunto de datos de una encuesta. El objetivo es identificar:
+
+- Un grupo de personas con perfil similar en sus respuestas a las preguntas
+- Las asociaciones entre categorías de variables
+
+A continuacion, se va a calcular y visualizar análisis de correspondencias múltiples en el software $\mathrm{R}$ usando FactoMineR (para el análisis) y factoextra (para la visualización de datos). 
+```{r, message=FALSE}
+library(FactoMineR)
+library(factoextra)
+library(gplots)
+library(corrplot)
+library(dplyr)
+```
+
+
+
+
+```{r}
+data("poison")
+str(poison)
+dim(poison)
+```
+
+```{r}
+write.csv2(poison, "poison1.csv")
+```
+
+
+
+```{r}
+poison%>%DT::datatable()
+```
+
+La data es resultado de una encuesta realizada a niños de primaria que sufrieron intoxicación alimentaria. Se les preguntó sobre sus síntomas y sobre lo que comían.
+
+ - Los datos contienen 55 filas (individuos)
+ - 15 columnas (variables). 
+
+
+Consideremos  unicamente variables culitativas de los sintomas y comida consumida
+
+
+```{r}
+poison_active=poison[,5:15]
+poison_active%>%DT::datatable()
+
+```
+
+```{r}
+balloonplot(as.table(t(as.matrix(housetasks))), label=F, main="Tareas del hogar")
+```
+
+
+
+observemos la frecuencia de los sintomas
+```{r}
+summary(poison_active[,1:4])
+
+```
+
+
+observemos la frecuencias de la comida consumida
+
+```{r}
+summary(poison_active[,6:11])
+```
+
+```{r}
+
+for (i in 1:4) {
+  plot(poison_active[, i], main=colnames(poison_active) [i],
+        ylab ="Count", col="steelblue", las =2)
+  }
+
+```
+
+
+
+## Tabla de contingencia nauseas vs los que consumieron mayoneasa 
+
+```{r}
+table(poison_active[,c(1,8)])
+
+```
+
+## Tabla de contingencia nauseas vs los que consumieron mayonesa y vomito
+
+```{r}
+table(poison_active[,c(1,2,8)])
+
+```
+
+
+## Una forma más apropiada
+
+Para observar todas las variables cualitativas en una sola tabla es usando la funcion Burt 
+```{r}
+library("GDAtools")
+```
+
+```{r}
+burt(poison_active)
+
+```
+
+
+## Análisis de correspondencia Múltiple
+
+
+
+```{r}
+poison_active_mca=MCA(poison_active, graph = F)
+poison_active_mca
+```
+
+
+```{r}
+get_eigenvalue(poison_active_mca)
+```
+
+```{r}
+fviz_screeplot(poison_active_mca,addlabel=T)
+```
+
+```{r}
+corrplot(poison_active_mca$var$cos2)
+```
+
+```{r}
+corrplot(poison_active_mca$var$contrib*0.01)
+```
+
+
+```{r}
+fviz_mca_var(poison_active_mca, repel = F, col.var = "cos2", gradient.cols=c("red", "yellow", "green"))
+```
+
+```{r}
+fviz_mca_var(poison_active_mca, repel = F, choice = "mca.cor" )
+```
+
+
+
+- La componente 1: asocia los sintomas: fiebre, diarrea y dolor abdominal
+- componente 2:  alimentos 
+
+
+```{r}
+fviz_mca_var(poison_active_mca, repel = F, axes = c(1,3),choice = "mca.cor" )
+```
+
+```{r}
+fviz_mca_biplot(poison_active_mca,  col.var = "cos2", gradient.cols=c("red", "yellow", "green"), arrows = c(T,F))
+```
+
+Con variables suplementarias
+```{r}
+poison_sup_mca=MCA(poison, ind.sup=53:55,
+quanti.sup=1:2,
+quali.sup=3:4,
+graph=F)
+```
+
+
+```{r}
+fviz_mca_biplot(poison_sup_mca, repel = T, choice="var", habillage = c(3,4), addEllipses = T )
+```
+
+La hora y el hecho de estar enfermo esta fuertemente correlacionado con 
+
+el sexo y la edad no presentan incidencia sobr elos sintomas
+
+
