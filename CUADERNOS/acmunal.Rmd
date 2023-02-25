@@ -1,0 +1,448 @@
+---
+title: "Análisis de correspondencias Múltiples"
+author: "Wilson Sandoval R"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+    toc: true
+---
+
+
+# ANALISIS DE CORRESPONDENCIAS MULTIPLES (MCA)
+
+
+El análisis de correspondencia múltiple (MCA) es una extensión del análisis de correspondencia simple para resumir y visualizar una tabla de datos que contiene más de dos variables categóricas. También puede verse como una generalización del análisis de componentes principales cuando las variables a analizar son categóricas en lugar de cuantitativas.
+
+
+
+MCA se usa generalmente para analizar un conjunto de datos de una encuesta. El objetivo es identificar:
+
+- Un grupo de personas con perfil similar en sus respuestas a las preguntas
+- Las asociaciones entre categorías de variables
+
+A continuacion, se va a calcular y visualizar análisis de correspondencias múltiples en el software $\mathrm{R}$ usando FactoMineR (para el análisis) y factoextra (para la visualización de datos). 
+
+
+```{r}
+library(FactoMineR)
+library(ggplot2)
+library(FactoClass)
+library(factoextra)
+library(Rcpp)
+library(broom)
+library(pander)
+library(corrplot)
+library(gridExtra)
+library(DT)
+```
+Los datos “admi” del paquete FactoClass, que son los estudiantes admitidos a las 7 carreras de la Facultad de ciencias de la Universidad Nacional de Colombia (Bogotá) en el primer trimestre del 2013. Estos datos poseen información de los puntajes obtenidos por estos estudiantes (445 admitidos) en el examen de ingreso, así como también algunas variables de información sociodemográfica.
+
+
+
+```{r}
+data(admi)
+DatosInicial <- subset(admi, select = c("carr", "gene", "estr", "orig","age") )
+DT::datatable(DatosInicial)
+```
+
+
+```{r}
+write.csv2(admi, "admisiones.csv")
+```
+
+
+
+
+```{r}
+Carrera <- DatosInicial$carr
+Sexo <- DatosInicial$gene
+Estrato <- DatosInicial$estr
+Origen <- DatosInicial$orig
+Edad <- as.factor(DatosInicial$age)
+
+Datos <- cbind(DatosInicial,Carrera,Sexo,Estrato,Origen)
+Datos[,1:5] <- NULL
+```
+
+Se utilizaron las variables correspondientes a la carrera a la cual ingresaron, el género, el estrato y el origen (si son de Bogotá o no). 
+
+
+
+```{r}
+DT::datatable(Datos)
+```
+
+```{r}
+F1<-ggplot(Datos, aes(x=Carrera)) + geom_bar(fill= "#DDB4EB")
+F2<-ggplot(Datos, aes(x=Sexo)) + geom_bar(fill= "#FFD4A5")
+F3<-ggplot(Datos, aes(x=Estrato)) + geom_bar(fill= "#41894A")
+F4<-ggplot(Datos, aes(x=Origen)) + geom_bar(fill= "#FFEC28")
+F5 <- grid.arrange(F1,F2,F3,F4, nrow = 2)
+```
+
+La función MCA() crea un objeto que contiene mucha información encontrada en diferentes listas y matrices. Al usar la función print() se mostrará una lista con todos los valores que contiene.
+ 
+```{r}
+uni.mca <- MCA(Datos, graph = FALSE)
+print(uni.mca)
+```
+
+# Eingevalores
+
+```{r}
+eigenval <- get_eigenvalue(uni.mca)
+pander(head(eigenval))
+```
+
+
+
+Para determinar el numero de componentes principales smiramos un un Scree Plot, que es un plot de los eigenvalues ordenados de mayor a menor. 
+
+- El número de componentes es determinado en el punto mas allá del cual los egeinvalues restantes son todos relativamente pequeños y de tamaño comparable.
+- También se puede calcular el eigenvalue promedio sobre el cual el axis se debería mantener en la solución. En este caso debería ser (1/(número de columnas-1)).
+
+
+```{r}
+fviz_screeplot(uni.mca, addlabels = TRUE, ylim = c(0, 15)) + geom_hline(yintercept = 7.14, linetype = 2, color = "red")
+
+```
+
+## Biplot
+
+```{r}
+
+fviz_mca_biplot(uni.mca, repel = TRUE, 
+                ggtheme = theme_grey())+labs(
+                  title ="           Representación simultanea de los individuos y las categorías")
+
+```
+
+- Los individuos están representados por los puntos azules
+- Las categorías de las variables por los triángulos rojos. 
+- Individuos con un perfil similar están cerca en el mapa de factores y lo mismo se puede decir para los puntos de las variables. 
+- Parte de los individuos se relaciona con el estrato bajo y haber ingresado a la carrera de química. 
+- Hay una relación entre estudiantes que ingresaron a matemáticas y el género masculino, y estudiantes de estrato alto y la carrera física.
+
+
+
+## Resultados de Variables.
+
+```{r}
+var <- get_mca_var(uni.mca)
+var
+```
+
+
+
+Para visualizar la correlación entre variables y las dimensiones principales de ACM:
+
+```{r}
+fviz_mca_var(uni.mca, choice = "mca.cor",
+             repel = TRUE, axes=c(1,3),
+             ggtheme = theme_grey())
+
+```
+
+Esta gráfica ayuda a identificar las variables que están más correlacionadas con cada dimensión. Las correlaciones cuadradas entre variables y las dimensiones son usadas como coordenadas. 
+
+En este caso se tiene que la variable `Estrato` es la que presenta mayor correlación con la dimensión 2, por una diferencia pequeña con `Origen` y `Carrera`, y una mayor con `Género`. Así mismo, la variable más correlacionada con la dimensión 1 es `Carrera`.
+
+Si queremos ver las coordenadas puntuales de cada categoría en cada dimensión:
+
+```{r}
+pander(head(round(var$coord, 2), 15))
+
+```
+
+Para solo ver las modalidades o categorías de las variables (sin individuos):
+
+```{r}
+fviz_mca_var(uni.mca, col.var = "purple", shape.var = 10, repel = TRUE,
+             ggtheme = theme_grey())+labs(title = " Nube de puntos de las Modalidades/Categorías")
+```
+
+Se observa la relación y asociación entre las categorías de las variables y se puede interpretar como:
+
+- Las categorías de variables con un perfil similar están agrupadas juntas.
+
+- Categorías de variables correlacionadas negativamente están posicionadas en lados opuestos del origen de la gráfica (cuadrantes opuestos).
+
+- La distancia entre los puntos de cada categoría y el origen mide la calidad de la categoría de la variable en el mapa de factores. Los puntos de cada categoría que estén lejos del origen están bien representados en el mapa.
+
+Según esto, bajo lo que se puede observar en el gráfico, las categorías “Cund”, “Otro”, “Bajo” y “Química” comparten un perfil similar, existe cierta asociación. Se puede suponer entonces que las personas que entraron a la Universidad Nacional a la Facultad de Ciencias que son provenietes de lugares por fuera de Bogotá, tienen más relación o asociación con estratos socioeconomicos bajos, y una escogencia en la carrera de quimica.
+
+Los inidividuos de estrato alto estan más asociados a carreras universitarias como la fisica y la matematica y esta última al sexo masculino. Para culminar, vemos que el sexo femenino esta más relacionado con la carrera universitaria farmacia.
+
+
+
+## Calidad de la representación de las categoría de las variables.
+La calidad de la representación se llama el coseno cuadrado (Cos2), el cual mide el grado de asociación entre las categorías de las variables y un eje en particular. Si la categoría de una variable está bien representada por dos dimensiones, la suma del cos2 es cercana a uno. Para algunos ítems de las filas, más de dos dimensiones son requeridas para represetar perfectamente los datos. Hay distintas maneras de ver dicha calidad de representación:
+
+
+```{r}
+pander(head(var$cos2, 15))
+```
+
+En este caso ninguna de las categorías estaría bien representada únicamente por 2 dimensiones, la categoría Bogotá cuenta con un cos2 de 0.612 pero aún así no es lo suficientemente cercano a uno. Todas las categorías de las variables requerirían más de una dimensión para estar mejor representadas.
+
+Diagrama de puntos:
+
+```{r}
+fviz_mca_var(uni.mca, col.var = "cos2", 
+             repel = TRUE, gradient.cols = c("#00AFBB", "#E7B800","#FC4E07"), axes = c(1,2),
+                ggtheme = theme_grey())+labs(title = " Nube de puntos de las Modalidades/Categorías")
+
+```
+
+Gráficamente es más sencillo observar las categorías que se encuentran mejor representadas por las dimensiones 1 y 2. Como ya se dijo, la categoría Bogotá es de las que mejor representadas se encuentra, seguido de las categorías Bajo, F (Femenino) y M (Masculino).
+
+
+Diagrama de barras:
+
+```{r}
+
+fviz_cos2(uni.mca, choice = "var", axes = 1:2)+labs(title = " Cos2 de Categorías para las Dimensiones 1-2")
+```
+
+
+Las categorías peor representadas por las dimensiones 1 y 2 parecen ser “Esta”, “Biol”, “Mate”, “Cund”, “Fisi”. Esto significa que la posición de sus correspondientes puntos en el diagrama de dispersión deben ser interpretados con precausión. También indica que una solución con dimensión más alta sería recomendable.
+
+Y, finalmente, para ver un análisis del cos2 con más de dos dimensiones:
+
+```{r}
+corrplot(var$cos2, is.corr = FALSE)
+```
+
+##Contribución de las categorías de las variables a las dimensiones.
+
+La contribución de las categorías de las variables (en %) a la definición de las dimensiones puede ser extraída como
+
+```{r}
+pander(head(round(var$contrib,2), 15))
+
+```
+
+Las categorías de las variables con el mayor valor contribuyen más a la definición de las dimensiones, y, así mismo, las que contribuyen mas a la dimensión 1 y 2 son las más importantes en explicar la variabilidad de los datos.
+
+Gráficamente:
+
+```{r}
+
+fviz_contrib(uni.mca, choice = "var", axes = 1, top = 15)+labs(title = "Contribución de las Categorías para las Dimensión 1")
+
+```
+
+
+```{r}
+fviz_contrib(uni.mca, choice = "var", axes = 2, top = 15)+labs(title = "Contribución de las Categorías para las Dimensión 2")
+
+```
+
+
+La linea roja indica el valor promedio esperado si las contribuciones fueran uniformes. En este caso, las categorías “Farm”, “F”, “Medio”, y “Bajo” son las más importantes en la definición de la primera dimensión, por otro lado, “Otro”, “Bajo”, “Alto” y “F” son las que más contribuyen a la dimensión 2.
+
+Las que más contribuyen en total se pueden ver mediante dos gráficos distintos, un gráfico de barras:
+
+```{r}
+fviz_contrib(uni.mca, choice = "var", axes = 1:2, top = 15)+labs(title = "                Contribuciones de las Categorías para las Dimensiónes 1-2")
+```
+
+```{r}
+fviz_mca_var(uni.mca, col.var = "contrib", 
+             gradient.cols = c("#00AFBB", "#E7B800","#FC4E07"),
+                ggtheme = theme_grey()
+             , repel = TRUE)
+```
+
+Aquí, las categorías que más contribuyen son Farm, F, Bajo, y Otro, y se puede distinguir a qué polo de las dimensiones están contribuyendo: Bajo y Otro contribuyen al polo positivo de la dimensión 1 y 2, mientras que Farm y F contribuyen al polo positivo de la dimensión 2 y el polo negativo de la dimensión 1.
+
+
+
+# Resultados Individuos
+
+
+
+Ahora se procede a realizar el mismo procedimiento pero para los individuos.
+
+```{r}
+est <- get_mca_ind(uni.mca)
+est
+```
+
+
+Estos resultados para los individuos dan la misma información como la descrita para las categorías de variables.
+
+Coordinadas de los puntos de columnas
+
+```{r}
+pander(head(est$coord))
+```
+
+```{r}
+sort(est$coord[,1])
+```
+
+
+Calidad de representación
+
+```{r}
+
+pander(head(est$cos2))
+```
+
+
+
+
+
+
+Contribuciones.
+
+```{r}
+pander(head(est$contrib))
+```
+
+
+
+
+
+Ahora vamos a visualizar únicamente los individuos coloréandolos en base de sus valores de Cos2 (calidad de representación).
+
+
+```{r}
+?fviz_mca_ind
+```
+
+
+```{r}
+fviz_mca_ind(uni.mca, col.ind = "cos2",
+             gradient.cols= c("blue", "white", "red"),
+             repel = TRUE, 
+             ggtheme = theme_grey())
+```
+
+
+
+
+Se ven individuos mas alejados al centro de gravedad son los mejor representados por ambas dimensiones dado que segun sus caracteristicas contribuyen un alto porcentaje a la definicion de ambas dimensiones (lejanos y aproximadamente con 45 grados al centro de gravedad), ademas de los que estan alejados y muy cercanos a una dimension, como por ejemplo los individuos 409, 417 y 445 se encuentra muy cercanos al eje de la dimension 2 por lo que esta los representa bien.
+
+
+```{r}
+tail(est$contrib)
+```
+
+
+```{r}
+fviz_cos2 (uni.mca, choice = "ind", axes = 1:2, top = 50)+labs(title = "Cos2 de los individuos para las Dimensiónes 1-2")
+
+```
+
+
+
+Aquí se observa una complicación si quisieramos observar los cos2 de cada individuo mediante un diagrama de barras debido a la gran cantidad de datos que hay. El diagrama de barras en este caso no es recomendable por esto mismo, y ocurre también para observar las contribuciones de los individuos a las dimensiones. El codigo para observar las contribuciones sería
+
+
+```{r}
+fviz_contrib(uni.mca, choice = "ind", axes = 1:2)
+```
+
+## Agrupando a los individuos.
+
+El siguiente código agrupa los individuos por colores utilizando los niveles de la variable de elección, en este caso escogimos la variable “Sexo” que indica el género de los estudiantes admitidos. El argumento habillage se usa para especificar el el factor de la variable para agrupar los individuos por color. Se agrega también un elipse de concentración alrededor de cada grupo usando el argumento addEllipses = TRUE.
+
+
+```{r}
+fviz_mca_ind(uni.mca,
+            label = "none",
+            habillage = Sexo,
+            pallette = c("#CCCCFF", "#F08080"),
+            addEllipses = TRUE,
+            ggtheme = theme_grey())
+```
+
+
+
+
+Se puede observar cómo las elipses de concentración de los puntos correspondientes a las categorías de la variable sexo están diferenciadas entre sí horizontalmente, indicando que la dimensión representada en ese eje (dimensión 1) discrimina entre ambas categorías de la variable. Esto no es así para la dimensión en el eje vertical (dimensión 2).
+
+Si se quiere hacer con varias variables categóricas:
+
+```{r}
+fviz_ellipses(uni.mca, 1:4, 
+              geom = "point")
+
+
+```
+
+
+
+
+
+  - Descripción de la dimensión:
+  
+```{r}
+uni.desc <- dimdesc(uni.mca, axes = c(1,2))
+uni.desc[[1]]
+```
+  
+
+
+### Prueba de hipotesis:
+
+- H0: La variable o clasificacion no es caracteristica en la dimension
+- H1: La variable o clasificacion es caracteristica en la dimensión
+
+
+El primer eje (dimension 1) se caracteriza por todas las cualitativas de la base de datos, siendo la variable carrera la que mas influencia tiene en esta dimension dado que tiene el R-cuadrado mas alto. Por el lado de las categorias, todas menos la carrera de biologia ni estadistica, son caracteristicas en esta dimension.
+
+Se puede ver que la categoria sexo masculino tiene coordenadas significativamente más elevadas que la media (0) en el primer eje, mientras que la categoria estrato medio es la que tiene coordenadas mas por debajo de la media del eje 1.
+
+```{r}
+uni.desc[[2]]
+```
+
+
+
+El primer eje (dimension 2) se caracteriza por todas las cualitativas de la base de datos, siendo la variable estrato la que mas influencia tiene en esta dimension dado que tiene el R-cuadrado mas alto. Por el lado de las categorias, todas menos la carrera de Estadistica, son caracteristicas en esta dimension.
+
+Se puede ver que la categoria estrato bajo tiene coordenadas significativamente más elevadas que la media (0) en el segundo eje, mientras que la categoria origen Bogota es la que tiene coordenadas mas por debajo de la media del eje 2.
+
+
+
+## Variable Suplementaria.
+
+Se agrega la variable suplementaria “Edad” a la base de datos
+
+
+```{r}
+NuevosDatos<-cbind(Datos,Edad)
+```
+
+
+```{r}
+sup.mca<- MCA(NuevosDatos,quali.sup = 5,ncp=2,graph = FALSE)
+coor_cat<- sup.mca$quali.sup$coord
+pander(coor_cat)
+```
+
+
+```{r}
+coor_edad<-sup.mca$quali.sup$eta2
+pander(coor_edad)
+```
+
+
+
+
+```{r}
+fviz_mca_var(sup.mca,repel=T)+labs(title =" Nube de puntos de Categorias y Edad Suplementaria")
+```
+
+
+
+
+Del gráfico anterior, inferimos que de las relaciones más fuertes que se pueden notar, son cuando los estudiantes tienen 15 y 26 años su estrato es bajo, y provienen de otros sectores fuera de Bogotá. Otra puede ser los que tengan 25 años y provengan de municipios de Cundinamarca.
+
+Las variables e individuos suplementarios no se utilizan para determinar las dimensiones principales. Sus coordenadas se predicen utilizando únicamente la información proporcionada por el análisis de correspondencia múltiple realizado sobre las variables/individuos activos.  
+
