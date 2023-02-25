@@ -18,7 +18,8 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
   + <a href="https://rpubs.com/wilsonsr/933520"> Rpubs> </a>
 
-- Análisis de correspondencias Múltiples
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/acmunal.Rmd">  Análisis de correspondencias Múltiples </a>
+
 - Análisis Factorial
 - Agrupamiento de K-medias 
 - Agrupamiento Jerárquico
