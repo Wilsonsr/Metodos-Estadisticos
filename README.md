@@ -19,6 +19,8 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
   + <a href="https://rpubs.com/wilsonsr/933520"> Rpubs> </a>
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/acmunal.Rmd">  Análisis de correspondencias Múltiples I </a>
+  + https://rpubs.com/wilsonsr/1007494
+
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS%20MULTIPLES%20(1).Rmd">  Análisis de correspondencias Múltiples  II </a>
 
 - Análisis Factorial
