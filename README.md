@@ -21,10 +21,11 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/acmunal.Rmd">  Análisis de correspondencias Múltiples I </a>
   + https://rpubs.com/wilsonsr/1007494
 
-- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS%20MULTIPLES%20(1).Rmd">  Análisis de correspondencias Múltiples  II </a>
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS%20MULTIPLES%20(1).Rmd">  Análisis de correspondencias Mú ltiples  II </a>
 
-- Análisis Factorial
-- Agrupamiento de K-medias 
+
+-  <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Aprendizaje_no_supervisado%20Kmeans.ipynb" > Agrupamiento de K-medias </a>
+
 - Agrupamiento Jerárquico
 - Aprendizaje supervisado: Clasificación y regresión
 - Regresión Logística
