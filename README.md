@@ -26,7 +26,9 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 -  <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Aprendizaje_no_supervisado%20Kmeans.ipynb" > Agrupamiento de K-medias </a>
 
-- Agrupamiento Jerárquico
+-  <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/1_Agrupamiento_jerarquico.ipynb > Agrupamiento dJerarquico </a>
+
+
 - Aprendizaje supervisado: Clasificación y regresión
 - Regresión Logística
 - Árboles de decisión
