@@ -31,7 +31,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/precios_en_el_sector_inmobiliario_en_Bogot%C3%A1.ipynb" > Introdución Regresión Lineal y Logística </a>
 - Aprendizaje supervisado: Clasificación y regresión
 - Regresión Logística >
-- Árboles de decisión
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arboldecis%20(1).ipynb"> Árboles de decisión </a>
 - Clasificadores de Naive Bayes
 - Máquinas de soporte vectorial
 - Random Forest
