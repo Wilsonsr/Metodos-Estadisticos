@@ -32,11 +32,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - Aprendizaje supervisado: Clasificación y regresión
 - Regresión Logística >
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arboldecis%20(1).ipynb"> Árboles de decisión </a>
-- Clasificadores de Naive Bayes
-- Máquinas de soporte vectorial
-- Random Forest
-- XgBoost
-
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_1%20(1).ipynb"> Árboles de decisión Ejemplo 1 </a>
 
 
 <ul>
