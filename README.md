@@ -56,6 +56,9 @@ https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipy
 
 - <a href="https://docs.google.com/document/d/1YKko-qNjCaMQV5FCfTAANjCda-Mp_A3D/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true" > PDA </a>
 
+
+https://meet.google.com/hoi-epzc-wbg?authuser=1&hl=es
+
 ## Evaluación
 En cada uno de los cortes las notas se distribuirán de la siguiente manera>
 
