@@ -38,6 +38,11 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
   - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_2_(1)%20(1).ipynb
 "> Árboles de decisión Ejemplo 2 </a>
 
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_2_(1)_(1).ipynb"> Árboles de decisión Ejemplo 2 </a>
+
+
+
+
 
 <ul>
   <li><a href="https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipynb">- Regresión Logística</a></li>
