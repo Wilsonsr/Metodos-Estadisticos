@@ -30,6 +30,9 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/precios_en_el_sector_inmobiliario_en_Bogot%C3%A1.ipynb" > Introdución Regresión Lineal y Logística </a>
 - Aprendizaje supervisado: Clasificación y regresión
+
+
+
 - Regresión Logística >
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arboldecis%20(1).ipynb"> Árboles de decisión </a>
 
@@ -39,6 +42,9 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 "> Árboles de decisión Ejemplo 2 </a>
 
   - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_2_(1)_(1).ipynb"> Árboles de decisión correccion Ejemplo 2 </a>
+
+
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Copia_de_Datos_desbalanceados.ipynb"> Desbalanceo de clases </a>
 
 
 
@@ -60,6 +66,7 @@ https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipy
 - Everitt, B. S. and Hothorn, T. (2011), An Introduction to Applied Multivariate Analysis with R , New York: Springer-Verlag
 - Kassambara, A. (2017). Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning (Vol. 1). STHDA.
 - Jiawei Han and Micheline Kamber, “Data Mining: Concepts and Techniques”, Morgan Kaufmann Publishers, 3rd ed, 2010.
+
 
 
 - <a href="https://docs.google.com/document/d/1YKko-qNjCaMQV5FCfTAANjCda-Mp_A3D/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true" > PDA </a>
