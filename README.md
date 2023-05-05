@@ -47,7 +47,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Copia_de_Datos_desbalanceados.ipynb"> Desbalanceo de clases </a>
 
 
-- <a href="- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Copia_de_Datos_desbalanceados.ipynb"> Random Forest </a>
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Random_Forest%20(1).ipynb"> Random Forest </a>
 
 
 
