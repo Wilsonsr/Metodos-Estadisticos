@@ -50,6 +50,10 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Random_Forest%20(1).ipynb"> Random Forest </a>
 
 
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Xgboost%20(1).ipynb"> Xgboost </a>
+
+
+
 
 
 <ul>
