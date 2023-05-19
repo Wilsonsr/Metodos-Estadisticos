@@ -80,6 +80,7 @@ https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipy
 
 https://meet.google.com/hoi-epzc-wbg?authuser=1&hl=es
 
+  https://docs.google.com/spreadsheets/d/1UmNOgELrzm0pdGDK5Bdm8ZVvtfJFn5qI7EqMXe1Pzao/edit?usp=sharing
 ## Evaluación
 En cada uno de los cortes las notas se distribuirán de la siguiente manera>
 
