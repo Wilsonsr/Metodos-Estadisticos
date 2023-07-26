@@ -75,15 +75,7 @@ https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipy
 
 
 
-- <a href="https://docs.google.com/document/d/1YKko-qNjCaMQV5FCfTAANjCda-Mp_A3D/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true" > PDA </a>
 
-
-https://meet.google.com/hoi-epzc-wbg?authuser=1&hl=es
-
-  https://docs.google.com/spreadsheets/d/1UmNOgELrzm0pdGDK5Bdm8ZVvtfJFn5qI7EqMXe1Pzao/edit?usp=sharing
-
- <a href= "https://docs.google.com/spreadsheets/d/1PQ3desz3iYTdiv2eXwBKJp4dqHvdc_w0pMwgQpokYLc/edit?usp=sharing"> Horarios exposicion </a>
-  
   ## Evaluación
 En cada uno de los cortes las notas se distribuirán de la siguiente manera>
 
