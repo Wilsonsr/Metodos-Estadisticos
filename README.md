@@ -77,17 +77,17 @@ https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipy
 
 
   ## Evaluación
-En cada uno de los cortes las notas se distribuirán de la siguiente manera>
+Las notas se distribuirán de la siguiente manera
 
 |ACTIVIDAD|PORCENTAJE|
 |---|---|
-|Quices-Talleres| 40%|
-|Proyecto|60% (20 20 20)|
+|Quices-Talleres| 50%|
+|Proyecto|50% (10 20 20)|
 |Total|100%|
 
 
 + Primer avance. Problema, justificación y objetivos.
-+ Segundo avance. Marco teórico – Previa metodología-
++ Segundo avance. Marco teórico –previa metodología-
 + Metodología y primeros resultados.
 + Exposiciones Entrega Final
 
