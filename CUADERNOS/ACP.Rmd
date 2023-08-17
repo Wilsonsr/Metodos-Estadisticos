@@ -397,7 +397,7 @@ Contribuciónn de cada variable a las componentes principales (cada película) e
 Prueba que cada variable aporta un porcentaje en cada componente. La suma es $100
 
 ```{r}
-colSums(get_pca_var(peliculas_pca)$contrib)
+#colSums(get_pca_var(peliculas_pca)$contrib)
 ```
 
 
@@ -423,7 +423,7 @@ colSums(get_pca_var(peliculas_pca)$contrib)
 
 
 ```{r}
-fviz_pca_biplot(peliculas_pca)
+#fviz_pca_biplot(peliculas_pca)
 ```
 
 
@@ -579,7 +579,4 @@ library(GGally)
 ```{r}
 ggpairs(iris[,1:4], mapping = aes(color=iris$Species))
 ```
-
-
-
 
