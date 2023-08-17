@@ -1,0 +1,221 @@
+---
+title: "Actividad ACP"
+author: ""
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## **Objetivo**
+
+El objetivo es estudiar la relación calidad precio de 35 marcas de whisky, utilizando las variables 
+
+- **precio** (francos franceses)
+- **proporción de malta ( %)** 
+- **vejez** (añejamiento en años) 
+- **apreciación** (nota promedio de un panel de catadores redondeada a entero). 
+
+Se dispone además de una variable categórica "categorías", que clasifica las marcas según su contenido de malta (1=Bajo, 2=Estándar, 3=Puro malta).
+
+
+
+
+Para obtener los datos use:
+
+```{r,message=FALSE}
+library(FactoClass)
+data("Whisky")
+head(Whisky)
+```
+
+```{r}
+Y=Whisky[,-3]
+
+```
+
+
+
+**Trabajo**
+
+Realice primero un ACP no normado y luego un ACP normado utilizando el software R y responda a las preguntas.
+
+
+Para el ACP no normado utilice:
+```{r, message=FALSE}
+library(FactoMineR)
+library(factoextra)
+```
+
+```{r,fig.height=4, fig.width=3.5, fig.align="center"}
+acpc <- PCA(Y, scale.unit = F)
+
+```
+
+```{r, fig.width=3.5, fig.height=4}
+get_eigenvalue(acpc)
+fviz_eig(acpc, addlabels=T)
+```
+
+
+
+### Pregunta 1
+
+En el ACP no normado, analice la contribución de las variables a la inercia(varianza). ¿Realmente se puede considerar un análisis de las cuatro variables?
+
+```{r}
+
+```
+
+
+
+### Pregunta 2
+
+Realice el ACP normado, justifique por qué es el que conviene para los objetivos de este taller.
+
+
+
+```{r}
+
+```
+
+
+
+
+### Pregunta 3
+
+¿Cuántos ejes retiene para el análisis? ¿Por qué?
+
+
+```{r}
+
+```
+
+
+
+### Pregunta 4
+¿Cuál es la variable que más contribuye al primer eje? ¿Cuál es la que menos? (indique los porcentajes).
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
+### Pregunta 5
+
+Según el círculo de correlaciones, ¿cuáles son las variables más correlacionadas? ¿Cuánto es la correlación? ¿Si corresponden a lo que se observa en la matriz de correlaciones?
+
+```{}
+
+```
+
+
+
+
+
+
+```{r}
+
+```
+
+
+### Pregunta 6
+¿Cuál es la variable mejor representada en el primer plano factorial? ¿Cuál la peor? (escriba los porcentajes).
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+### Pregunta 7
+¿Qué representa el primer eje? ¿Qué nombre le asignaría? ¿Qué representa el segundo eje?
+
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+```
+
+
+### Pregunta 8
+
+¿Cuál es el individuo mejor representado en el primer plano factorial? Ubique sobre el gráfico de individuos al peor representado sobre el primer plano factorial (indique los porcentajes).
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+
+### Pregunta 9
+¿Qué características tienen las marcas de Whisky según sus ubicaciones en el plano? (a la derecha, a la izquierda, arriba, abajo).
+
+
+```{r}
+
+```
+
+
+### Pregunta 10
+
+A partir de la posición en el plano deduzca las características de las tres categorías de whisky (lujo, estándar y pura malta).
+
+
+### Pregunta 11
+
+Supongamos que usted desea comprar una botella de Whisky con buena apreciación y que no sea tan cara. Dé dos números de marcas que compraría. ¿Por qué? ?Cuáles son las características de las dos marcas?
+
+
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+
+### Pregunta 12
+
+Seleccione dos marcas que definitivamente no compraría. ¿Por qué? ¿Qué características tienen?
+
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
