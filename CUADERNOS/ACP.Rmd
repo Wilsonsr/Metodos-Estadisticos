@@ -246,7 +246,7 @@ Defina una matriz llamela $A$, los nombres de las columnas "Matrix", "Alien", "S
 ```
 
 ```{r}
-library(psych)
+#library(psych)
 #corPlot(A)
 ```
 
@@ -265,6 +265,55 @@ library("FactoMineR")
 #peliculas_pca=PCA(A, graph = F)
 #peliculas_pca
 ```
+- `"$eig"` 
+  + Representa los autovalores asociados a cada componente principal.
+  + Los autovalores indican la cantidad de varianza que cada componente principal representa. Cuanto más grande es un autovalor, más varianza del conjunto original de datos es capturada por ese componente.
+  
+- `"$var"` 
+Proporciona un resumen de los resultados relacionados con las variables.
+
+- `"$var$coord"` 
+Son las coordenadas de las variables en el espacio de los componentes principales.
+Estas coordenadas ayudan a interpretar la relación entre las variables y cada componente principal.
+
+- `"$var$cor"` 
+Representa las correlaciones entre las variables originales y los componentes principales.
+Una correlación alta indica que la variable está bien representada por ese componente principal.
+
+- `"$var$cos2"` 
+Es el cuadrado del coseno de los ángulos entre las variables y los componentes principales.
+Muestra la calidad de representación de las variables en cada componente principal. Un valor cercano a 1 indica una buena representación.
+
+- `"$var$contrib"` 
+Indica cuánto contribuye cada variable a cada componente principal.
+
+- `"$ind"` 
+Proporciona un resumen de los resultados relacionados con las observaciones o individuos.
+
+- `"$ind$coord"`
+Son las coordenadas de los individuos en el espacio de los componentes principales.
+
+- `"$ind$cos2"` 
+muestra la calidad de representación de los individuos en cada componente principal.
+
+- `"$ind$contrib"` 
+Indica cuánto contribuye cada individuo a cada componente principal.
+
+- `"$call"` 
+Estadísticas resumidas del PCA.
+
+- `"$call$centre"` 
+Es la media de cada variable. El PCA se realiza comúnmente después de centrar (restar la media) los datos.
+
+- `"$call$ecart.type"` 
+Representa la desviación estándar o el error estándar de las variables.
+
+- `"$call$row.w"` 
+Son los pesos asociados a cada individuo.
+
+- `"$call$col.w"` 
+Son los pesos asociados a cada variable.
+
 
 ```{r}
 #class(peliculas_pca)
@@ -273,12 +322,6 @@ library("FactoMineR")
 ```{r}
 #peliculas_pca$var$coord
 ```
-
-
-```{r}
-#peliculas_pca
-```
-
 
 
 ```{r}
@@ -337,18 +380,24 @@ library("corrplot")
 #get_pca_var(peliculas_pca)$contrib[,1:5]
 ```
 
+```{r}
+#peliculas_pca$var$cos2
+```
+
 
 
 ```{r}
 #corrplot(get_pca_var(peliculas_pca)$cos2)
 
 ```
+
+
 Contribuciónn de cada variable a las componentes principales (cada película) en cada concepto(en cada componente principal)
 
 Prueba que cada variable aporta un porcentaje en cada componente. La suma es $100
 
 ```{r}
-#colSums(get_pca_var(peliculas_pca)$contrib)
+colSums(get_pca_var(peliculas_pca)$contrib)
 ```
 
 
@@ -374,7 +423,7 @@ Prueba que cada variable aporta un porcentaje en cada componente. La suma es $10
 
 
 ```{r}
-#fviz_pca_biplot(peliculas_pca)
+fviz_pca_biplot(peliculas_pca)
 ```
 
 
@@ -443,7 +492,7 @@ fviz_eig(Iris_pca, addlabels=T)
 ```
 
 
-- Podemos observar que los componentes $1$ y 2 son las más significativas. Capturan casi el 96% de las varianzas de las variables.
+- Podemos observar que los componentes $1$ y $2$ son las más significativas. Capturan casi el 96% de las varianzas de las variables.
 
 
 ```{r}
@@ -511,7 +560,7 @@ ggplot(data=iris, aes(x=Species, y=Petal.Width, fill=Species))+
 fviz_pca_biplot(iris_pca_anal_sup,  habillage = 5)
 ```
 
-- En los dos anteriores gr?ficos observamos que hay una gran diferencia entre las flores iris de la especie setosa y las de las especies versicolor y virginica esta diferencia se da en la dimensión $1$ que representa el ancho y la longitud del petalo  y ls longitud del sepalo.
+- En los dos anteriores gráficos observamos que hay una gran diferencia entre las flores iris de la especie setosa y las de las especies versicolor y virginica esta diferencia se da en la dimensión $1$ que representa el ancho y la longitud del petalo  y la longitud del sepalo.
 
 
 
