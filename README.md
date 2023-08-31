@@ -94,4 +94,4 @@ Las notas se distribuirán de la siguiente manera
 
 
 - <a href="https://docs.google.com/document/d/1zrigXkepH42H7WWdM_oJXjYUZZCJS6EP/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> PDA </a>
-
+https://meet.google.com/xcc-qrrj-crt
