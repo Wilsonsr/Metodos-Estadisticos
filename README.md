@@ -25,7 +25,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS%20MULTIPLES%20(1).Rmd">  Análisis de correspondencias Mú ltiples  II </a>
 
 
--  <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Aprendizaje_no_supervisado%20Kmeans.ipynb" > Agrupamiento de K-medias </a>
+-  <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Aprendizaje_no_supervisado%20Kmeans%20(1).ipynb" > Agrupamiento de K-medias </a>
 
 -  <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/1_Agrupamiento_jerarquico.ipynb > Agrupamiento dJerarquico </a>
 
