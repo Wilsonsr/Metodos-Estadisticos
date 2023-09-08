@@ -26,7 +26,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 
 -  <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Aprendizaje_no_supervisado%20Kmeans%20(1).ipynb" > Agrupamiento de K-medias </a>
-   + < a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Delitos%20Colombia%20(1)%20(1).ipynb" > Delitos </a>
+   + <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Delitos%20Colombia%20(1)%20(1).ipynb" > Delitos </a>
 
 
 -  <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/1_Agrupamiento_jerarquico.ipynb > Agrupamiento dJerarquico </a>
