@@ -34,8 +34,8 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipynb
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/precios_en_el_sector_inmobiliario_en_Bogot%C3%A1.ipynb" > Introdución Regresión Lineal y Logística </a>
-- Aprendizaje supervisado: Clasificación y regresión
 
+- <a href="https://docs.google.com/presentation/d/1dy8U1ku1rxqVdVzHNldZ3Rj7D4pXnFcq/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> Validación </a>
 
 
 - Regresión Logística >
