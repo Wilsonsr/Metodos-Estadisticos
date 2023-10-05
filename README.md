@@ -38,7 +38,8 @@ https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipyn
 - <a href="https://docs.google.com/presentation/d/1dy8U1ku1rxqVdVzHNldZ3Rj7D4pXnFcq/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> Validación </a>
 
 
-- Regresión Logística >
+<!--
+
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arboldecis%20(1).ipynb"> Árboles de decisión </a>
 
   - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_1%20(1).ipynb"> Árboles de decisión Ejemplo 1 </a>
@@ -57,7 +58,7 @@ https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipyn
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Xgboost%20(1).ipynb"> Xgboost </a>
 
-
+-->
 
 
 
