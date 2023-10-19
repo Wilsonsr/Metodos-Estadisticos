@@ -61,7 +61,6 @@ https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipyn
 
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Xgboost%20(1).ipynb"> Xgboost </a>
--->
 
 
 
@@ -71,6 +70,7 @@ https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipyn
 
 https://github.com/Wilsonsr/metodos-estadisticos/blob/main/Introducci%C3%B3n.ipynb
 
+-->
 
 ## Textos de Referencia
 - Müller, A. C., & Guido, S. (2016). Introduction to machine learning with Python: a guide for data scientists. " O'Reilly Media, Inc.".
