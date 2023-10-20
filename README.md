@@ -18,6 +18,9 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS%20(1).Rmd"> Análisis de Correspondencias </a>   
     + <a href="https://rpubs.com/wilsonsr/933520"> Rpubs> </a>
 
+
+
+
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/acmunal.Rmd">  Análisis de correspondencias Múltiples I </a>
   + https://rpubs.com/wilsonsr/1007494
 
@@ -104,3 +107,7 @@ Las notas se distribuirán de la siguiente manera
 
 - <a href="https://docs.google.com/document/d/1zrigXkepH42H7WWdM_oJXjYUZZCJS6EP/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> PDA </a>
 https://meet.google.com/xcc-qrrj-crt
+
+
+
+https://docs.google.com/spreadsheets/d/1SZ0033RP57XM_KB01cUZCQlfllfAZMxeUfCQxjjesw4/edit?usp=sharing
