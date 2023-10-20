@@ -46,7 +46,7 @@ https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipyn
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Naive_Bayes_1.ipynb"> Naive Bayes </a>
 
-- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arboldecis%20(1).ipynb"> Árboles de decisión </a>
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_decision_1.ipynb"> Árboles de decisión </a>
 
   - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_1%20(1).ipynb"> Árboles de decisión Ejemplo 1 </a>
 
