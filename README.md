@@ -53,12 +53,15 @@ https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipyn
   - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_2_(1)%20(1).ipynb
 "> Árboles de decisión Ejemplo 2 </a>
 
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Copia_de_Datos_desbalanceados.ipynb"> Desbalanceo de clases </a>
+
 <!--
 
+
+  
   - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_de_decision_2_(1)_(1).ipynb"> Árboles de decisión correccion Ejemplo 2 </a>
 
 
-- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Copia_de_Datos_desbalanceados.ipynb"> Desbalanceo de clases </a>
 
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Random_Forest%20(1).ipynb"> Random Forest </a>
