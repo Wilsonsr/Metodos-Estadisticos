@@ -107,7 +107,7 @@ Las notas se distribuirán de la siguiente manera
 + Exposiciones Entrega Final
 
 
-- <a href="https://docs.google.com/document/d/1zrigXkepH42H7WWdM_oJXjYUZZCJS6EP/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> PDA </a>
+- <a href="https://docs.google.com/document/d/1LknmAN1d5trOVDNrnqS4oAObi_6Wd0xo/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> PDA </a>
 
 
 
