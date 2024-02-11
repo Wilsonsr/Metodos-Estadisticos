@@ -109,6 +109,8 @@ Las notas se distribuirán de la siguiente manera
 
 - <a href="https://docs.google.com/document/d/1LknmAN1d5trOVDNrnqS4oAObi_6Wd0xo/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> PDA </a>
 
+- <a href="https://drive.google.com/drive/folders/1SIe_j4hw_fZjlNysLKyUEa5XkK5SIuwt?usp=sharing"> GRABACIONES </a>
+
 
 
 
