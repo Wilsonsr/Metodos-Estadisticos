@@ -72,7 +72,7 @@ en R los puede calcular con la funcion    `eigen`
 
 
 ```{r}
-#Escriba su código
+#Escriba su código aquí
 ```
 
 - Calcular los eingevalores e ingevectores
