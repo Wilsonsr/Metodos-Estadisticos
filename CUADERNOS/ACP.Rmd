@@ -81,7 +81,7 @@ en R los puede calcular con la funcion    `eigen`
 ```{r}
 # Escriba su código
 ```
-## Propiedades de los eigenvectores 
+## Propiedades de los eigenvectores (vectores propios) 
 
 - Solo las matrices cuadradas tienen eigenvectores, pero no todas las matrices cuadradas los tienen. 
 
@@ -93,7 +93,7 @@ en R los puede calcular con la funcion    `eigen`
 -  **Un eigenvalor > 1** indica que la componente principal explica más varianza de lo que lo hace una de las variables originales, estando los datos estandarizados.
 
 
-## ESTANDARIZACIÓN DE LAS VARIABLES
+## Estandarización de las Variables
 
 - El cálculo de los componentes principales depende de las unidades de medida empleadas en las variables. 
 
