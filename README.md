@@ -15,7 +15,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
     + <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/homicidiosacp.Rmd"> pcadelitos </a>
     + <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Actividad_ACP.Rmd"> Actividad PCA </a>
     
-- <a href="[https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS%20(1).Rmd](https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS.Rmd)"> Análisis de Correspondencias </a>   
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/ANALISIS%20DE%20CORRESPONDENCIAS.Rmd"> Análisis de Correspondencias </a>   
     + <a href="https://rpubs.com/wilsonsr/933520"> Rpubs> </a>
 
 
