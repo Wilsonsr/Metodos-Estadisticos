@@ -1,5 +1,5 @@
 ---
-title: "ANÁLISIS DE CORRESPONDENCIAS"
+title: "Análisis De Correspondencias"
 author: "Wilson Sandoval Rodríguez"
 date: "`r Sys.Date()`"
 output:
@@ -239,19 +239,20 @@ O_chisq = chisq.test(O)
 O_chisq
 ```
 
-con una significancia del 5% hay evidencia para decir que el tama?o de manos y pies es dependiente
-
-
 
 ```{r}
 O_chisq$expected
 ```
 
+```{r}
+library(vcd)
+assocstats(O)
+```
 
 
 
-##Parte 2 
-Analisis de correspondencia
+## Parte 2 
+Análisis de correspondencia
 ```{r}
 library("gplots")  # tabla de cotingencia plot
 ```
