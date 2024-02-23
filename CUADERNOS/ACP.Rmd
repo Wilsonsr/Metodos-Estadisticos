@@ -48,7 +48,7 @@ factoriales podrán resumir las variables originales.
 
 # Eingenvectores y eigenvalores
 
-Los eigenvectores y eigenvalores son  números y vectores asociados a matrices cuadradas. Dada una matriz $A$ de $n\times n$, su eigenvector $v$  de $n\times$ tal que
+Los eigenvectores y eigenvalores son  números y vectores asociados a matrices cuadradas. Dada una matriz $A$ de $n\times n$, su eigenvector $v$  de $n\times 1 $ tal que
 
 
 
@@ -72,15 +72,19 @@ en R los puede calcular con la funcion    `eigen`
 
 
 ```{r}
-#Escriba su código aquí
+B=matrix(c(2,3,2,1), nrow=2, byrow = T)
+B
 ```
 
-- Calcular los eingevalores e ingevectores
+- Calcular los eingevalores y eingevectores
 
 
 ```{r}
-# Escriba su código
+eigen(B)
 ```
+
+
+
 ## Propiedades de los eigenvectores (vectores propios) 
 
 - Solo las matrices cuadradas tienen eigenvectores, pero no todas las matrices cuadradas los tienen. 
@@ -235,19 +239,26 @@ y usuarios usando los paquetes "FACTO"
 Defina una matriz llamela $A$, los nombres de las columnas "Matrix", "Alien", "Serenity","Casablanca", "Amelie"  nombres de los individuos "Pedro","Adriana", "Teo", "Andres", "Manuel", "Javier", "Maria"
 
 ```{r}
-# Escriba su código
+data=c(1,   1,  1,  0,  0,3,    3,  3,  0,  0,4,    4,  4,  0,  0,5,    5,  5,  0,
+       0,0, 2,  0,  4,  4,0,    0,  0,  5,  5,0,    1,  0,  2,  2)
+A=matrix(data, nrow=7, byrow = T)
+peliculas=c("Matrix", "Alien", "Serenity","Casablanca", "Amelie")
+individuos=c("Pedro","Adriana", "Teo", "Andres", "Manuel", "Javier", "Maria")
+colnames(A)=peliculas
+rownames(A)=individuos
 
+A
 ```
 
-- Correlacion entre las variables
+- Correlación entre las variables
 
 ```{r}
-#cor(A)
+cor(A)
 ```
 
 ```{r}
-#library(psych)
-#corPlot(A)
+library(psych)
+corPlot(A)
 ```
 
 
@@ -262,8 +273,8 @@ library("FactoMineR")
 
 
 ```{r}
-#peliculas_pca=PCA(A, graph = F)
-#peliculas_pca
+peliculas_pca=PCA(A, graph = F)
+peliculas_pca
 ```
 - `"$eig"` 
   + Representa los autovalores asociados a cada componente principal.
@@ -316,32 +327,37 @@ Son los pesos asociados a cada variable.
 
 
 ```{r}
-#class(peliculas_pca)
+class(peliculas_pca)
 ```
 
 ```{r}
-#peliculas_pca$var$coord
+peliculas_pca$eig
 ```
 
 
 ```{r}
-#get_eigenvalue(peliculas_pca)
-```
-
-```{r}
-#peliculas_pca$eig
+peliculas_pca$var$coord
 ```
 
 
+```{r}
+get_eigenvalue(peliculas_pca)
+```
 
 ```{r}
-#fviz_eig(peliculas_pca, addlabels=T)
+peliculas_pca$eig
+```
+
+
+
+```{r}
+fviz_eig(peliculas_pca, addlabels=T)
 ```
 
 - Se puede observar tanto en la tabla como en el anterior gráfico  que las componentes $1$ y 2 son las más significativas ya que  capturan el 98% de las varianzas de las variables.
 
 ```{r}
-#fviz_pca_var(peliculas_pca,repel = T, colvar="cos2", col.var = "contrib", alpha.var = "contrib", gradient.cols=c("#FF0000","#FFFF00","#00FF00"))
+fviz_pca_var(peliculas_pca,repel = T, colvar="cos2", col.var = "contrib", alpha.var = "contrib", gradient.cols=c("#FF0000","#FFFF00","#00FF00"))
 ```
 
 
@@ -367,27 +383,28 @@ library("corrplot")
 ```
 
 ```{r}
-#get_pca_var(peliculas_pca)
+get_pca_var(peliculas_pca)
 ```
 
 
 ```{r}
-#get_pca_var(peliculas_pca)$coord[,1:3]
+get_pca_var(peliculas_pca)$coord[,1:2]
 ```
 
 
 ```{r}
-#get_pca_var(peliculas_pca)$contrib[,1:5]
+get_pca_var(peliculas_pca)$contrib[,1:5]
 ```
 
 ```{r}
-#peliculas_pca$var$cos2
+peliculas_pca$var$cos2
 ```
 
 
 
 ```{r}
-#corrplot(get_pca_var(peliculas_pca)$cos2)
+library(corrplot)
+corrplot(get_pca_var(peliculas_pca)$cos2)
 
 ```
 
@@ -397,7 +414,7 @@ Contribuciónn de cada variable a las componentes principales (cada película) e
 Prueba que cada variable aporta un porcentaje en cada componente. La suma es $100
 
 ```{r}
-#colSums(get_pca_var(peliculas_pca)$contrib)
+colSums(get_pca_var(peliculas_pca)$contrib)
 ```
 
 
@@ -407,23 +424,23 @@ Prueba que cada variable aporta un porcentaje en cada componente. La suma es $10
 
 
 ```{r}
-#fviz_contrib(peliculas_pca, choice = "var", axes=1)
+fviz_contrib(peliculas_pca, choice = "var", axes=1)
 ```
 
 
 ```{r}
-#fviz_contrib(peliculas_pca, choice = "var", axes=2)
+fviz_contrib(peliculas_pca, choice = "var", axes=2)
 ```
 
 
 ```{r}
-#fviz_contrib(peliculas_pca, choice = "var", axes=3)
+fviz_contrib(peliculas_pca, choice = "var", axes=3)
 ```
 
 
 
 ```{r}
-#fviz_pca_biplot(peliculas_pca)
+fviz_pca_biplot(peliculas_pca)
 ```
 
 
@@ -435,13 +452,13 @@ A partir del anterior gráfico se puede decir
 - Pedro es neutral respecto a las películas de ciencia ficción y no es afínn con las películas de romance.
 
 ```{r}
-#A=as.data.frame(A)
+A=as.data.frame(A)
 ```
 
 
 ```{r}
-#library(GGally)
-#ggpairs(A)
+library(GGally)
+ggpairs(A)
 ```
 
 
@@ -466,6 +483,7 @@ Elegimos las variables cuantitativas
 
 ```{r}
 Iris=iris[,1:4]
+Iris
 ```
 
 
@@ -481,6 +499,7 @@ corPlot(Iris, cex = 1.2, main = "Matriz de correlación")
 Iris_pca=PCA(Iris, graph = F)
 ```
 
+obtener los valores propios
 ```{r}
 get_eigenvalue(Iris_pca)
 ```
@@ -505,6 +524,9 @@ fviz_pca_var(Iris_pca,repel = T, colvar="cos2", col.var = "contrib", alpha.var =
 
 - La componente principal 2 explica principalmente el ancho del sépalo.
 
+```{r}
+Iris_pca$var$contrib
+```
 
 
 ```{r}
@@ -517,6 +539,11 @@ corrplot(get_pca_var(Iris_pca)$cos2)
 
 
 ### Analisis de variables cualitativas
+
+```{r}
+iris
+```
+
 
 no se toman en cuanta para pca  es para un análisis posterior
 ```{r}
@@ -545,6 +572,7 @@ como mostrar las variables cualitativas, en este caso las competencias
 ```{r}
 fviz_pca_ind(iris_pca_anal_sup, addEllipses = T, habillage = 5)
 ```
+
 ```{r}
 library(ggplot2)
 ```
