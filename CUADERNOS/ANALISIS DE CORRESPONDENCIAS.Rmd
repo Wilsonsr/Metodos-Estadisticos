@@ -1,0 +1,425 @@
+---
+title: "ANÁLISIS DE CORRESPONDENCIAS"
+author: "Wilson Sandoval Rodríguez"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+    toc: true
+---
+
+
+# El análisis de correspondencias simples (ACS) 
+
+- Se utiliza para describir tablas de contingencia (TC) mediante la representación geométrica de las tablas de
+condicionales fila y columna (perfiles) derivadas de aquellas. 
+
+- El objetivo del ACS es describir las asociaciones entre las variables fila y columna, a través de sus perfiles:
+
+- Comparar los perfiles fila.
+- Comparar los perfiles columna.
+- Estudiar las correspondencias entre perfiles fila y columna
+
+
+
+- **Tabla de contingencia: ** En estadística las tablas de contingencia se emplean para registrar y analizar la asociación entre dos o más variables, habitualmente de naturaleza cualitativa (nominales u ordinales).
+
+
+
+La metodología la desarrolló Benzecri, a principios de los años 60 del siglo XX en la Universidad de Renner (Francia). En esencia. es un tipo especial de análisis de componentes principales pero realizado sobre una tabla de contingencia y usando una distancia euclídea ponderada llamada chi-cuadrado
+
+
+
+**Ejemplo:** supongamos 400 tiendas de discos repartidas entre los países de la U.E. Se
+clasifica a los compradores en 3 categorías distintas: Jóvenes, Edad Media, Mayores, y a los tipos de música en 5 tipos:
+
+- **A** = Música disco
+- **B** = Rock’n’roll y música americana
+- **C** = Pop y música inglesa (melódicas)
+- **D** = Jazz y música autóctona
+- **E** = Clásica
+
+
+\begin{array}{ccccc} 
+& \text { Jov } & \text { Med } & \text { May } & \text { Total } \\
+\text { A } & 70 & 0 & 0 & 70 \\
+\text { B } & 45 & 45 & 0 & 90 \\
+\text { C } & 30 & 30 & 30 & 90 \\
+\text { D } & 0 & 80 & 20 & 100 \\
+\text { E } & 35 & 5 & 10 & 50 \\
+\text { Total } & 180 & 160 & 60 & 400
+\end{array}
+
+
+- Se define el perfil de una tabla como el conjunto de las frecuencias de una fila o de una columna dividido entre el total de la fila o columna.
+
+
+\begin{array}{cccc} 
+& \text { Jov } & \text { Med } & \text { May } \\
+\text { A } & 1 & 0 & 0 \\
+\text { B } & 0.5 & 0.5 & 0 \\
+\text { C } & 0.33 & 0.33 & 0.33 \\
+\text { D } & 0 & 0.8 & 0.2 \\
+\text { E } & 0.7 & 0.1 & 0.2 \\
+\text { Total } & 0.45 & 0.40 & 0.15
+\end{array}
+
+
+- Se puede ver que un 
+  - 45\% de compradores es Joven, 
+  - 40\ % Medianos y 
+  - 15\% Mayores.
+- Por tipos de música, por ejemplo en el tipo E el reparto de edades
+difiere de la media: (70% frente a 45% en Jóvenes, 10% frente a 40% en Medianos).
+
+
+
+Si nos centramos en las columnas
+
+
+\begin{array}{lcccc} 
+& \text { Jov } & \text { Med } & \text { Mayores} & \text { Total } \\
+\text { A } & 0.39 & 0 & 0 & 0.175 \\
+\text { B } & 0.25 & 0.28 & 0 & 0.225 \\
+\text { C } & 0.17 & 0.19 & 0.50 & 0.225 \\
+\text { D } & 0 & 0.50 & 0.33 & 0.25 \\
+\text { E } & 0.19 & 0.03 & 0.17 & 0.125
+\end{array}
+
+Por ejemplo de los 160 compradores en el caso de los de mediana edad, un 50% compra el tipo de música $D$ en vez del porcentaje general del 25%.
+
+
+
+### Contraste Chi cuadrado
+
+La prueba de chi-cuadrado es un método estadístico que se utiliza para determinar si existe una asociación significativa entre variables categóricas comparando las frecuencias observadas y esperadas en una tabla de contingencia.
+
+
+$H_0$ : No hay asociación significativa entre las variables. 
+
+$H_1$: Hay una asociación significativa entre las variables.
+
+Para realizar la prueba Chi-cuadrado:
+
+- Crear una tabla de contingencia con las frecuencias observadas para cada categoría.
+- Calcular las frecuencias esperadas asumiendo la independencia entre las variables.
+- Calcular el estadístico Chi-cuadrado. 
+
+- Comparar el estadístico calculado con el valor crítico de la distribución Chi-cuadrado para determinar si se rechaza o no la hipótesis nula.
+
+
+$$\chi^2 = \sum \frac {(O_{ij} - E_{ij})^2}{E_{ij}}$$
+Dónde:
+
+- χ2 : El estadístico de prueba chi-cuadrado, que mide la discrepancia entre los valores observados y esperados.
+- $\Sigma$ (sigma) : suma los valores de cada celda de la tabla de contingencia.
+- $O_{ij}$ : La frecuencia observada en cada celda de la tabla de contingencia.
+- $E_{ij}$ : La frecuencia esperada en cada celda de la tabla de contingencia.
+
+Casos de uso de ejemplo
+
+- Evaluar la relación entre las variables demográficas (por ejemplo, edad, género, ingresos) y las preferencias del consumidor o el comportamiento de compra.
+- Examinar la asociación entre los factores de riesgo y los resultados de las enfermedades, como el tabaquismo y la incidencia el cáncer de pulmón.
+- Explorar la relación entre variables categóricas como el nivel educativo y la situación laboral o la afiliación política y el comportamiento electoral.
+- Determinar si los patrones de herencia observados son consistentes con las proporciones mendelianas esperadas, o si ciertos marcadores genéticos están asociados con rasgos o enfermedades específicas.
+- Evaluar la relación entre las variables de control de calidad, como el tipo de defecto, y la línea de producción.
+
+
+
+### Suposiciones
+
+**1. Independencia:** La ocurrencia de una observación no debe influir ni ser influenciada por otra observación.
+
+**2. Categórico:** Ambas variables son para datos categóricos.
+
+**3. Mutuamente excluyentes:** Las observaciones sólo pueden pertenecer a una celda de la tabla de contingencia.
+
+**4. Tamaño de la muestra:** Debe haber al menos cinco observaciones en cada celda de la tabla de contingencia.
+
+### Pruebas alternativas
+- **Prueba exacta de Fisher:** adecuada cuando el tamaño de la muestra es pequeño y las frecuencias de celda esperadas en la tabla de contingencia son inferiores a 5. A menudo se utiliza como alternativa a la prueba de chi-cuadrado en tablas de contingencia de 2x2.
+
+- **Prueba de McNemar:** se utiliza al analizar datos categóricos emparejados, generalmente en una tabla de contingencia de 2x2, donde las observaciones son dependientes o están relacionadas. Se utiliza comúnmente en estudios de antes y después o en estudios de casos y controles emparejados.
+
+- **Prueba de Cochran-Mantel-Haenszel:** se utiliza al analizar datos categóricos en estudios estratificados o emparejados. Permite la comparación de múltiples tablas de contingencia 2x2 mientras controla variables de confusión o factores de estratificación.
+
+
+
+
+## Cálculo paso a paso de las estadísticas de la prueba de chi-cuadrado
+ejemplo con los datos. Datos de COVID Y usaremos la prueba de Chi-cuadrado para ver si ciertos síntomas de COVID y el ingreso en UCI están relacionados.
+
+$$
+\begin{array}{|l|c|c|c|}
+\hline
+ & \textbf{Anorexia} & \textbf{No-anorexia} & \textbf{Total} \\ \hline
+\textbf{UCI}     & 24            & 12                 & 36             \\ \hline
+\textbf{No-UCI}  & 31            & 71                 & 102            \\ \hline
+\textbf{Total}   & 55            & 83                 & 138            \\ \hline
+\end{array}
+$$
+
+
+
+
+
+Cargar las librerias
+```{r, message=FALSE}
+library("factoextra")
+library("FactoMineR")
+library("gplots")
+library("dplyr")
+```
+
+
+
+Tabla de contingencias observadas
+
+
+
+
+```{r}
+O=matrix(c(24,12,31,71), nrow = 2, byrow = T)
+
+
+colnames(O)=c("Anorexia", "No Anorexia")
+
+rownames(O)=c("UCI", "No UCI")
+O
+```
+### Tabla de valores Esperados
+
+Los valores esperados son el número de observaciones que se podría esperar que ocurran, en promedio, si las proporciones de la prueba fueran verdaderas.
+
+El valor esperado en una tabla de contingencia se refiere a lo que uno esperaría si las variables fueran independientes, es decir, si no hubiera relación entre ellas. Para calcular los valores esperados en una tabla de contingencia, se utiliza la siguiente fórmula:
+
+$$E_{ij}=\frac{R_iC_j}{N}$$
+
+
+
+donde:
+- $E_{ij}$ es el valor esperado para la celda en la fila 
+i y columna j.
+
+- $R_i$ es el total de la fila i.
+
+- $C_j$   es el total de la columna j.
+
+- $N$ es el total general de todas las observaciones en la tabla.
+
+```{r,message=FALSE}
+#library(sjPlot)
+#library(sjmisc)
+#library(sjlabelled)
+library(kableExtra)
+```
+
+```{r}
+O_chisq = chisq.test(O)
+```
+
+
+```{r}
+kable(addmargins(O_chisq$expected))
+```
+
+
+```{r}
+par(mfrow = c(1, 2))
+
+mosaicplot(O,  col = 3:5, main= "Valores observados",)
+mosaicplot(O_chisq$expected, col = 3:5, main= "Valores esperados")
+```
+
+
+prueba chi cuadrado
+```{r}
+O_chisq = chisq.test(O)
+O_chisq
+```
+
+con una significancia del 5% hay evidencia para decir que el tama?o de manos y pies es dependiente
+
+
+
+```{r}
+O_chisq$expected
+```
+
+
+
+
+##Parte 2 
+Analisis de correspondencia
+```{r}
+library("gplots")  # tabla de cotingencia plot
+```
+
+```{r}
+
+balloonplot(as.table(O),label=T)
+```
+El tama?o del punto indica la relaci?n
+
+
+## Ejemplo $1$
+
+```{r}
+data("housetasks")
+housetasks%>%head(15)%>%DT::datatable()
+```
+
+
+
+
+##
+convertir la data como una tabla
+
+```{r}
+
+df<-as.table(as.matrix(housetasks))
+df
+
+balloonplot(t(df), label=F, main="Tareas del hogar")
+```
+
+## Prueba chi cuadrado  
+
+(prueba de hipotesis)
+
+$H_0:$ variables independientes                               (hipótesis nula)
+
+$H_1:$ variables son dependientes                             (hipopteis alternativa)   
+
+
+
+
+```{r}
+class(housetasks)
+class(housetasks$Jointly)
+```
+
+
+
+prueba chicuadrado
+```{r}
+chisq.test(housetasks)
+```
+
+p valor.
+
+$valor\ p = 2.2e-16$                $2.2\times10^{-16}$ 
+
+
+$valor \ p= 2.2e-16 <0.05$
+
+
+se rechaza la hipotesis nula en favor de la alternativa,
+
+
+Las parejas se organizan para hacer las tareas del hogar
+
+
+## Analisis de correspondencia
+
+```{r}
+housetasks_CA= CA(housetasks, graph = F)
+print(housetasks_CA)
+```
+
+```{r}
+housetasks_CA$col
+```
+
+
+```{r}
+housetasks_CA$row
+```
+
+
+
+
+
+```{r}
+fviz_screeplot(housetasks_CA, addlabel=T)
+```
+
+El 89% de la varianzaa de las variables estan eplicadaas por las dimensiones $1$ y $2$
+
+```{r}
+fviz_ca_biplot(housetasks_CA,repel = T)
+```
+
+* Azul: filas
+* rojo: columnas
+
+
+
+ - tareas como dinner, breafesast, laundry son realizadas con mas frecuencia por la esposa.
+
+ - De las tareas Driving y repairs se encarga con mayor frecuencia el esposo.
+
+ - juntos: holidays, finances, seguridad
+
+ - alternan:  Official
+
+
+```{r}
+library("corrplot")
+corrplot(housetasks_CA$col$cos2)
+```
+
+distancia $cos^2$ para la variable de tareas
+```{r}
+corrplot(housetasks_CA$row$cos2 )
+```
+
+
+- Componente $1$:  tareas individuales realizadas dentro del hogar
+- Componente $2$:  tareas realizadas en conjunto  dentro del hogar
+
+
+
+Contribucion de cada asignacion de responsabilidad
+
+```{r}
+fviz_contrib(housetasks_CA, choice = "col" ,axes = 1)
+```
+
+
+```{r}
+fviz_contrib(housetasks_CA, choice = "col" ,axes = 2)
+```
+
+```{r}
+fviz_contrib(housetasks_CA, choice = "col" ,axes = 1:2)
+
+```
+
+
+```{r}
+fviz_contrib(housetasks_CA, choice = "row" ,axes = 1)
+```
+
+```{r}
+fviz_contrib(housetasks_CA, choice = "row" ,axes = 2)
+```
+
+
+```{r}
+fviz_contrib(housetasks_CA, choice = "row" ,axes = 1:2)
+```
+
+
+
+```{r}
+fviz_ca_biplot(housetasks_CA,repel = T, arrow=c(F,T), col.col="cos2", gradient.cols=c("red", "yellow", "green"), alpha.col="contrib")
+```
+
+
+
+
+
+
+
