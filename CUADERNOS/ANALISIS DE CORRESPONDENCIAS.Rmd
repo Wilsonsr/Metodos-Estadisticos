@@ -235,7 +235,7 @@ mosaicplot(O_chisq$expected, col = 3:5, main= "Valores esperados")
 
 prueba chi cuadrado
 ```{r}
-O_chisq = chisq.test(O)
+O_chisq = chisq.test(O,correct = F)
 O_chisq
 ```
 
