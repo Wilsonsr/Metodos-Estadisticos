@@ -39,10 +39,14 @@ library(DT)
 ```
 Los datos “admi” del paquete FactoClass, que son los estudiantes admitidos a las 7 carreras de la Facultad de ciencias de la Universidad Nacional de Colombia (Bogotá) en el primer trimestre del 2013. Estos datos poseen información de los puntajes obtenidos por estos estudiantes (445 admitidos) en el examen de ingreso, así como también algunas variables de información sociodemográfica.
 
+```{r}
+data(admi)
+admi
+```
 
 
 ```{r}
-data(admi)
+
 DatosInicial <- subset(admi, select = c("carr", "gene", "estr", "orig","age") )
 DT::datatable(DatosInicial)
 ```
@@ -140,7 +144,7 @@ Para visualizar la correlación entre variables y las dimensiones principales de
 
 ```{r}
 fviz_mca_var(uni.mca, choice = "mca.cor",
-             repel = TRUE, axes=c(1,3),
+             repel = TRUE, axes=c(1,2),
              ggtheme = theme_grey())
 
 ```
