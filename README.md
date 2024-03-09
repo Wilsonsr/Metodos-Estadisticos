@@ -31,11 +31,12 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
    + <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Delitos%20Colombia%20(1)%20(1).ipynb" > Delitos </a>
 
 
-<!--
+
 
 
 -  <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/1_Agrupamiento_jerarquico.ipynb > Agrupamiento dJerarquico </a>
 
+<!--
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN%20(1).ipynb"> DBSCAN </a>
 
 https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipynb
