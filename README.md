@@ -35,10 +35,9 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 
 -  <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/1_Agrupamiento_jerarquico.ipynb > Agrupamiento dJerarquico </a>
-
   +  <a href= https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/2_Cluster_jerarquico_(1).ipynb >  ejemplos Agrupamiento dJerarquico </a>
 
-- <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipynb> DBSCAN >
+- <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipynb> DBSCAN  </a >
 
 
 
