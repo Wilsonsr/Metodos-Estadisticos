@@ -40,7 +40,7 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 - <a href=https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipynb> DBSCAN  </a >
 
-- <a href="[https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Encoding%20(1)%20(1).ipynb](https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Codificacion%20variables%20categoricas.ipynb)"> Encoding </a>
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Codificacion%20variables%20categoricas.ipynb"> Encoding </a>
 
 
 <!--
