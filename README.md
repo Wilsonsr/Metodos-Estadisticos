@@ -42,15 +42,14 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Codificacion%20variables%20categoricas.ipynb"> Encoding </a>
 
+- <a href="https://docs.google.com/presentation/d/1dy8U1ku1rxqVdVzHNldZ3Rj7D4pXnFcq/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> Validación </a>
+
 
 <!--
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN%20(1).ipynb"> DBSCAN </a>
 
 https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipynb
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/precios_en_el_sector_inmobiliario_en_Bogot%C3%A1.ipynb" > Introdución Regresión Lineal y Logística </a>
-
-- <a href="https://docs.google.com/presentation/d/1dy8U1ku1rxqVdVzHNldZ3Rj7D4pXnFcq/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> Validación </a>
-
 
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Encoding%20(1)%20(1).ipynb"> Encoding </a>
