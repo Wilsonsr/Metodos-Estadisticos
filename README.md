@@ -48,6 +48,10 @@ En el curso se construyen los fundamentos teóricos de los principales métodos 
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Naive_Bayes_1.ipynb"> Naive Bayes </a>
 
+
+- <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/arbol_decision_1.ipynb"> Árboles de decisión </a>
+
+
 <!--
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN%20(1).ipynb"> DBSCAN </a>
 
@@ -79,6 +83,9 @@ https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/DBSCAN.ipyn
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Random_Forest_1.ipynb"> Random Forest </a>
 
 <!--
+
+
+
 
 - <a href="https://github.com/Wilsonsr/Metodos-Estadisticos/blob/main/CUADERNOS/Xgboost%20(1).ipynb"> Xgboost </a>
 
