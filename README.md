@@ -1,12 +1,11 @@
 <div align='center'>
   
- # **Métodos Estadísticos - Ucentral 2024-II** 
-  Luis Andres Campos Maldonado, lcamposm@ucentral.edu.co
+ # **Métodos Estadísticos para Analítica de datos** 
+  Wilson Sandoval Rodriguez, wsandovalr@ucentral.edu.co
  </div>
 
 <div align='center'> 
 
- ### Lenguaje base: `Python 3.10.12`
   
  </div>
 
