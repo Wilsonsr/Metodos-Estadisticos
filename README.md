@@ -12,6 +12,29 @@
 
 En el curso se construyen los fundamentos teóricos de los principales métodos de la estadística exploratoria multidimensional y se trabajan sus aplicaciones, utilizando software especializado de uso libre y comercial. Las prácticas se orientan a la aplicación de los métodos a situaciones reales que requieren apropiación de los contextos específicos, a partir de la revisión de artículos, para realizar interpretaciones adecuadas de los datos y del fenómeno en general. Para el aprendizaje de la aplicación de los métodos, el estudiante deberá realizar talleres utilizando el Python lenguaje de programacion base.
 
+
+
+| Semana | Tema                                      | Lectura/Actividad                              |
+|--------|------------------------------------------|-----------------------------------------------|
+| 1      | Introducción al curso                    | Lectura 1: Introducción al curso Open In Colab |
+| 2      | Análisis Exploratorio de Datos (EDA)     | Lectura 2: EDA Open In Colab                  |
+| 3      | Análisis de Componentes Principales (PCA)| Lectura 3: PCA Open In Colab                  |
+| 4      | Ejemplos prácticos de PCA                | Lectura 4: Ejemplos PCA Open In Colab         |
+| 5      | **Primer avance del proyecto**           | Actividad: Presentación y retroalimentación   |
+| 6      | Análisis de Correspondencias             | Lectura 5: Análisis de Correspondencias Open In Colab |
+| 7      | Análisis de Correspondencias Múltiples   | Lectura 6: Análisis de Correspondencias Múltiples Open In Colab |
+| 8      | Análisis Factorial                       | Lectura 7: Análisis Factorial Open In Colab   |
+| 9      | Clúster Jerárquico y Algoritmos de Agrupación| Lectura 8: Clúster Jerárquico Open In Colab y Lectura 9: Algoritmo K-means Open In Colab |
+| 10     | **Segundo avance del proyecto**          | Actividad: Presentación y retroalimentación   |
+| 11     | DBSCAN y Regresión Lineal                | Lectura 10: DBSCAN Open In Colab y Lectura 11: Linear Regression Open In Colab |
+| 12     | Regresión Logística                      | Lectura 12: Logistic Regression Open In Colab |
+| 13     | Árboles de Decisión y Bosques Aleatorios | Lectura 13: Decision Tree Open In Colab y Lectura 14: Random Forrest Open In Colab |
+| 14     | Validación Cruzada                       | Lectura 15: Cross Validation Open In Colab    |
+| 15     | Introducción a Boosting                  | Lectura 16: Introducción Boosting Open In Colab |
+| 16     | Métodos de Boosting y **Presentación Final del Proyecto** | Lectura 17: XgBoost, LightGBM, CatBoost Open In Colab; Actividad: Presentación final del proyecto |
+
+
+
 ## Textos de Referencia
 - Müller, A. C., & Guido, S. (2016). Introduction to machine learning with Python: a guide for data scientists. " O'Reilly Media, Inc.".
 - Sarkar, D., Bali, R., & Sharma, T. (2018). Practical Machine Learning with Python. A Problem-Solver's Guide to Building Real-World Intelligent Systems, New York: Springer-Verlag
