@@ -223,8 +223,8 @@ def calcular_prevalencia(df, sintomas, año_col="Año"):
 
     return df_prevalencia
 
-def main():
-    st.title("Análisis Epidemiológico: Asociación y Prevalencia")
+def main():  
+    st.title("Asociación y Prevalencia- ARREM Versión 0.1")
 
     archivo = st.file_uploader("Sube tu archivo Excel", type=["xlsx", "xls"])
     
@@ -266,7 +266,7 @@ def main():
                     else:
                         st.warning("Por favor, selecciona al menos una variable independiente.")
 
-            # 🔴 Aquí comienza la corrección de identación para tab2
+            #  Aquí comienza la corrección de identación para tab2
             with tab2:
                 st.subheader("Cálculo de Prevalencia")
                 columnas = list(df.columns)
