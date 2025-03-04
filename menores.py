@@ -242,58 +242,56 @@ def main():
                 st.subheader("Análisis de Asociación Epidemiológica")
                 columnas = list(df.columns)
 
-                  # Verificar si la columna "Año" está en el DataFrame
-            if "Año" in columnas:
-                años_disponibles = sorted(df["Año"].unique())
-                años_disponibles.insert(0, "Todos")  # Opción para analizar todos los años
-                año_seleccionado = st.selectbox("Selecciona el año a analizar:", años_disponibles)
+                if "Año" in columnas:
+                    años_disponibles = sorted(df["Año"].unique())
+                    años_disponibles.insert(0, "Todos")
+                    año_seleccionado = st.selectbox("Selecciona el año a analizar:", años_disponibles)
+                else:
+                    st.error("La columna 'Año' no está en el dataset.")
+                    año_seleccionado = "Todos"
 
-            else:
-                st.error("La columna 'Año' no está en el dataset. Asegúrate de que la estructura de los datos sea correcta.")
-                año_seleccionado = "Todos"
+                variable_dependiente = st.selectbox("Selecciona la variable dependiente:", columnas)
+                variables_independientes = st.multiselect("Selecciona una o más variables independientes:", columnas)
 
-            variable_dependiente = st.selectbox("Selecciona la variable dependiente:", columnas)
-            variables_independientes = st.multiselect("Selecciona una o más variables independientes:", columnas)
+                if st.button("Calcular Estadísticas de Asociación"):
+                    if variables_independientes:
+                        df_filtrado = df if año_seleccionado == "Todos" else df[df["Año"] == año_seleccionado]
 
-            if st.button("Calcular Estadísticas de Asociación"):
-                if variables_independientes:
-                    
-            # Filtrar datos por año si el usuario no seleccionó "Todos"
-                    df_filtrado = df if año_seleccionado == "Todos" else df[df["Año"] == año_seleccionado]
+                        if df_filtrado.empty:
+                            st.warning(f"No hay datos para el año {año_seleccionado}.")
+                        else:
+                            resultado_df = calcular_estadisticas(df_filtrado, variable_dependiente, variables_independientes)
+                            st.write(f"### **Resultados de la prueba de asociación para {año_seleccionado}:**")
+                            st.dataframe(resultado_df)
+                    else:
+                        st.warning("Por favor, selecciona al menos una variable independiente.")
 
-                    if df_filtrado.empty:
-                        st.warning(f"No hay datos para el año {año_seleccionado}.")
-                    
-                    else: # Llamar la función de cálculo con los datos filtrados
-                        resultado_df = calcular_estadisticas(df_filtrado, variable_dependiente, variables_independientes)
-                        st.write(f"### **Resultados de la prueba de asociación para {año_seleccionado}:**")
-                        st.dataframe(resultado_df)
-        else:
-            st.warning("Por favor, selecciona al menos una variable independiente.")
-
-            
+            # 🔴 Aquí comienza la corrección de identación para tab2
             with tab2:
                 st.subheader("Cálculo de Prevalencia")
-                año_col = st.selectbox("Selecciona la columna de Año:", columnas, index=0)
-                sintomas = st.multiselect("Selecciona las columnas de síntomas:", columnas)
+                columnas = list(df.columns)
 
-                if sintomas:
-                    if st.button("Calcular Prevalencia"):
-                        resultado_df = calcular_prevalencia(df, sintomas, año_col)
+                if "Año" in columnas:
+                    año_col = st.selectbox("Selecciona la columna de Año:", columnas, index=0)
+                    sintomas = st.multiselect("Selecciona las columnas de síntomas:", columnas)
 
-                        if resultado_df is not None:
-                            st.write("### **Resultados de Prevalencia:**")
-                            st.dataframe(resultado_df)
+                    if sintomas:
+                        if st.button("Calcular Prevalencia"):
+                            resultado_df = calcular_prevalencia(df, sintomas, año_col)
 
-                            csv = resultado_df.to_csv(index=False).encode('utf-8')
-                            st.download_button(
-                                label="Descargar Resultados en CSV",
-                                data=csv,
-                                file_name="prevalencia_resultados.csv",
-                                mime="text/csv"
-                            )
-                else:
-                    st.warning("Por favor, selecciona al menos una columna de síntomas.")
+                            if resultado_df is not None:
+                                st.write("### **Resultados de Prevalencia:**")
+                                st.dataframe(resultado_df)
+
+                                csv = resultado_df.to_csv(index=False).encode('utf-8')
+                                st.download_button(
+                                    label="Descargar Resultados en CSV",
+                                    data=csv,
+                                    file_name="prevalencia_resultados.csv",
+                                    mime="text/csv"
+                                )
+                    else:
+                        st.warning("Por favor, selecciona al menos una columna de síntomas.")
 
 if __name__ == "__main__":
     main()
