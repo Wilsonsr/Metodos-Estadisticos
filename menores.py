@@ -106,7 +106,6 @@ def calcular_prevalencia(df, sintomas, año_col="Año"):
 
 import plotly.graph_objects as go
 
-import plotly.graph_objects as go
 
 def graficar_prevalencia_interactiva(df):
     """Genera una gráfica interactiva con doble eje usando Plotly."""
@@ -158,7 +157,14 @@ def graficar_prevalencia_interactiva(df):
             side="right"
         ),
 
-        legend=dict(x=0.2, y=1.0),
+        legend=dict(
+            x=1, 
+            y=1, 
+            xanchor="right", 
+            yanchor="top", 
+            bgcolor="rgba(255,255,255,0.7)",  # Fondo semitransparente para mejor visibilidad
+            bordercolor="black", 
+            borderwidth=1),
         template="plotly_white"
     )
 
