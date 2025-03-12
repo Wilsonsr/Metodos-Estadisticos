@@ -105,12 +105,20 @@ def calcular_prevalencia(df, sintomas, año_col="Año"):
 
 
 import plotly.graph_objects as go
+import numpy as np
+from scipy.stats import linregress
 
 
 def graficar_prevalencia_interactiva(df):
-    """Genera una gráfica interactiva con doble eje usando Plotly."""
+    """Genera una gráfica interactiva con doble eje usando Plotly, incluyendo regresión lineal sobre la prevalencia."""
     fig = go.Figure()
-
+    
+    # Ajuste de regresión lineal
+    x = df["Año"].astype(float).values  # Convertir años a valores numéricos
+    y = df["Prevalencia (%)"].astype(float).values
+    slope, intercept, r_value, _, _ = linregress(x, y)
+    linea_regresion = slope * x + intercept
+    
     # Agregar barras para el número de casos (eje izquierdo)
     fig.add_trace(go.Bar(
         x=df["Año"], 
@@ -121,12 +129,12 @@ def graficar_prevalencia_interactiva(df):
         textposition="outside",
         yaxis="y1"  # Asigna al primer eje Y
     ))
-
+    
     # Agregar línea para la prevalencia (eje derecho)
     fig.add_trace(go.Scatter(
         x=df["Año"], 
         y=df["Prevalencia (%)"],
-        mode="lines+markers",
+        mode="markers+lines",
         name="Prevalencia",
         marker=dict(color="orange", size=8),
         line=dict(width=2),
@@ -134,10 +142,20 @@ def graficar_prevalencia_interactiva(df):
         textposition="top center",
         yaxis="y2"  # Asigna al segundo eje Y
     ))
-
+    
+    # Agregar línea de regresión
+    fig.add_trace(go.Scatter(
+        x=df["Año"],
+        y=linea_regresion,
+        mode='lines',
+        name=f'Regresión lineal (R²={r_value**2:.4f})',
+        line=dict(color="red", dash="dash"),
+        yaxis="y2"
+    ))
+    
     # Configuración de ejes
     fig.update_layout(
-        title="Sibilancias último año",
+        title="Sibilancias último año con Regresión Lineal",
         xaxis=dict(title="Año"),
         
         # Eje izquierdo (Casos)
@@ -156,7 +174,7 @@ def graficar_prevalencia_interactiva(df):
             overlaying="y",  # Superpone sobre el otro eje
             side="right"
         ),
-
+        
         legend=dict(
             x=1, 
             y=1, 
@@ -167,8 +185,11 @@ def graficar_prevalencia_interactiva(df):
             borderwidth=1),
         template="plotly_white"
     )
-
+    
     st.plotly_chart(fig)
+
+
+
 
 
 
