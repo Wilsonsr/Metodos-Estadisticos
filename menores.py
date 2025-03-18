@@ -192,8 +192,6 @@ def graficar_prevalencia_interactiva(df):
 
 
 
-
-
 def main():  
     st.title("Asociación y Prevalencia- ARREM Versión 0.1")
 
@@ -238,26 +236,41 @@ def main():
                         st.warning("Por favor, selecciona al menos una variable independiente.")
 
             #  Aquí comienza la corrección de identación para tab2
+
             with tab2:
                 st.subheader("Cálculo de Prevalencia")
                 columnas = list(df.columns)
-
+                
                 if "Año" in columnas:
-                    año_col = st.selectbox("Selecciona la columna de Año:", columnas, index=0)
-                    sintomas = st.multiselect("Selecciona las columnas de síntomas:", columnas)
-
+                    año_col = st.selectbox("Selecciona la columna de Año:", columnas, index=0, key="anio_col")
+                    sintomas = st.multiselect("Selecciona las columnas de síntomas:", columnas, key="sintomas")
+                    
+                    filtro_columna = st.selectbox("Selecciona la columna para filtrar (Opcional):", ["Ninguno"] + columnas, index=0, key="filtro_columna")
+                    
+                    df_filtrado = df.copy()
+                    categoria_seleccionada = "Bogotá"
+                    
+                    if filtro_columna != "Ninguno" and filtro_columna in df.columns:
+                        categorias = df[filtro_columna].unique().tolist()
+                        categorias.insert(0, "Bogotá")
+                        categoria_seleccionada = st.selectbox(f"Selecciona una categoría de {filtro_columna}:", categorias, index=0, key="categoria_seleccionada")
+                        
+                        if categoria_seleccionada != "Bogotá":
+                            df_filtrado = df[df[filtro_columna] == categoria_seleccionada]
+                    
                     if sintomas:
-                        if st.button("Calcular Prevalencia"):
-                            resultado_df = calcular_prevalencia(df, sintomas, año_col)
-
+                        if st.button("Calcular Prevalencia", key="calcular_prevalencia"):
+                            resultado_df = calcular_prevalencia(df_filtrado, sintomas, año_col)
+                            
                             if resultado_df is not None:
-                                st.write("### **Resultados de Prevalencia:**")
+                                st.write(f"### **Resultados de Prevalencia para {categoria_seleccionada}:**")
                                 st.dataframe(resultado_df)
+                                st.write("### **Gráfico de Casos y Prevalencia**")
 
                                 # 📊 Incluir el gráfico de casos y prevalencia después de mostrar la tabla
-                                st.write("### **Gráfico de Casos y Prevalencia**")
+                                
                                 graficar_prevalencia_interactiva(resultado_df)
-
+                                
                                 csv = resultado_df.to_csv(index=False).encode('utf-8')
                                 st.download_button(
                                     label="Descargar Resultados en CSV",
@@ -267,6 +280,9 @@ def main():
                                 )
                     else:
                         st.warning("Por favor, selecciona al menos una columna de síntomas.")
+
+
+
 
 if __name__ == "__main__":
     main()
