@@ -253,10 +253,10 @@ def main():
                     if filtro_columna != "Ninguno" and filtro_columna in df.columns:
                         categorias = df[filtro_columna].unique().tolist()
                         categorias.insert(0, "Bogotá")
-                        categoria_seleccionada = st.selectbox(f"Selecciona una categoría de {filtro_columna}:", categorias, index=0, key="categoria_seleccionada")
+                        categoria_seleccionada = st.multiselect(f"Selecciona una o más categorías de {filtro_columna}:", categorias, index=0, key="categoria_seleccionada")
                         
                         if categoria_seleccionada != "Bogotá":
-                            df_filtrado = df[df[filtro_columna] == categoria_seleccionada]
+                            df_filtrado = df[df[filtro_columna].isin(categoria_seleccionada)]
                     
                     if sintomas:
                         if st.button("Calcular Prevalencia", key="calcular_prevalencia"):
