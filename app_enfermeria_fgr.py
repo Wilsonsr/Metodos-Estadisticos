@@ -25,7 +25,7 @@ mostrar_detalle = st.sidebar.checkbox("Mostrar detalles técnicos (HW y sombread
 # Cargar datos
 # ------------------------------------------------------------
 # ⚠️ Cambia a tu ruta/URL. 2024 ya está en el CSV: NO se toca.
-archivo_csv = "C:/Users/wsand/Dropbox/MINSALUD/2025/Julio/medicina_graduados_primer_curso/data_enfermeria_graduado.csv"
+archivo_csv = "https://raw.githubusercontent.com/Wilsonsr/Metodos-Estadisticos/refs/heads/main/data_enfermeria_graduado.csv"
 df = pd.read_csv(archivo_csv)
 
 # Normalizar columnas esperadas (acepta nombres del CSV original)
