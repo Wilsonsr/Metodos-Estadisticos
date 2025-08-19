@@ -24,13 +24,12 @@ mostrar_detalle = st.sidebar.checkbox("Mostrar detalles técnicos (HW y sombread
 # ------------------------------------------------------------
 # Cargar datos
 # ------------------------------------------------------------
-# ⚠️ Cambia a tu ruta/URL. 2024 ya está en el CSV: NO se toca.
+# 2024 ya está en el CSV: NO se toca.
 archivo_csv = "https://raw.githubusercontent.com/Wilsonsr/Metodos-Estadisticos/refs/heads/main/data_enfermeria_graduado.csv"
 df = pd.read_csv(archivo_csv)
 
 # Normalizar columnas esperadas (acepta nombres del CSV original)
 cols_csv = list(df.columns)
-# Intentar mapear nombres comunes a nombres estándar
 ren = {}
 if 'Medicos_Totales' in cols_csv: ren['Medicos_Totales'] = 'Profesionales_Totales'
 if 'Densidad_Medicos' in cols_csv: ren['Densidad_Medicos'] = 'Densidad'
@@ -38,8 +37,6 @@ if 'Variacion_Medicos' in cols_csv: ren['Variacion_Medicos'] = 'Var_Abs'
 if 'Variacion_Porc_Medicos' in cols_csv: ren['Variacion_Porc_Medicos'] = 'Var_%'
 df = df.rename(columns=ren)
 
-# Si el CSV traía el esquema como en Medicina:
-# ['Anio','Poblacion','Matriculados','Graduados','Medicos_Totales','Poblacion_y','Densidad_Medicos','Variacion_Medicos','Variacion_Porc_Medicos']
 esperadas = ['Anio','Poblacion','Matriculados','Graduados',
              'Profesionales_Totales','Poblacion_y','Densidad','Var_Abs','Var_%']
 if len(df.columns) >= 9:
@@ -74,7 +71,8 @@ df = df.drop_duplicates('Anio', keep='last').sort_values('Anio').reset_index(dro
 df['Poblacion'] = df['Poblacion'].ffill().bfill()
 
 # ------------------------------------------------------------
-# HOLT-WINTERS SOLO PARA RELLENAR 2025 SI FALTA (para que 2029 dependa de 2025)
+# HOLT-WINTERS SOLO PARA RELLENAR 2025 SI FALTA
+# (para comparar 2026–2031 con referencia "natural")
 # ------------------------------------------------------------
 limite_hist = 2024 if (df['Anio'] == 2024).any() else 2023
 df_hist = df[df['Anio'] <= limite_hist].dropna(subset=['Matriculados'])
@@ -85,7 +83,8 @@ df_hw['Matriculados_HW'] = np.nan
 if len(df_hist) >= 3:
     modelo_hw = ExponentialSmoothing(df_hist['Matriculados'], trend='add', seasonal=None)
     ajuste_hw = modelo_hw.fit()
-    inicio_fc, fin_fc = (limite_hist + 1), 2029
+    # ⬇️ CAMBIO CLAVE: proyectamos hasta 2031 para poder comparar 2026–2031
+    inicio_fc, fin_fc = (limite_hist + 1), 2031
     horizonte = max(0, fin_fc - limite_hist)
     if horizonte > 0:
         pred_hw = ajuste_hw.forecast(horizonte)
@@ -174,7 +173,7 @@ c2.metric("Base 2029", f"{base_2029:,}")
 c3.metric("Faltantes 2030–2035", f"{prof_faltantes:,}")
 
 # ------------------------------------------------------------
-# Referencia HW (solo para comparación; no inyecta salvo 2025)
+# Referencia HW (comparación 2026–2031)
 # ------------------------------------------------------------
 df_comp = pd.merge(
     df[['Anio', 'Matriculados']],
@@ -182,7 +181,9 @@ df_comp = pd.merge(
     on='Anio', how='left'
 )
 df_comp['Diferencia'] = df_comp['Matriculados'] - df_comp['Matriculados_HW']
-df_dif = df_comp[df_comp['Anio'].between(2026, 2029)]
+
+# ⬇️ CAMBIO CLAVE: ahora el rango es 2026–2031
+df_dif = df_comp[df_comp['Anio'].between(2026, 2031)]
 diferencia_total = int(df_dif['Diferencia'].dropna().sum()) if not df_dif.empty else 0
 
 # ------------------------------------------------------------
@@ -262,7 +263,8 @@ if mostrar_detalle:
     ))
     fig.add_vrect(x0=df['Anio'].min(), x1=2024, fillcolor="lightgray", opacity=0.07, layer="below", line_width=0,
                   annotation_text="Observado", annotation_position="top left")
-    fig.add_vrect(x0=2025, x1=2029, fillcolor="lightblue", opacity=0.07, layer="below", line_width=0,
+    # ⬇️ CAMBIO: extender HW hasta 2031
+    fig.add_vrect(x0=2025, x1=2031, fillcolor="lightblue", opacity=0.07, layer="below", line_width=0,
                   annotation_text="Proyección natural (HW)", annotation_position="top left")
     fig.add_vrect(x0=2030, x1=2035, fillcolor="lightgreen", opacity=0.07, layer="below", line_width=0,
                   annotation_text="Proyección por meta", annotation_position="top left")
@@ -294,19 +296,21 @@ st.markdown(f"""
 ### 👉 **{prof_necesarios:,}** profesionales necesarios en total
 """)
 
+# ⬇️ CAMBIO: también el rango del mensaje
 if mostrar_detalle and not df_dif.empty and df_hw['Matriculados_HW'].notna().any():
     mensaje_dif = (
-        f"✅ Entre 2026 y 2029, se proyectaron **{diferencia_total:,}** ingresantes **adicionales** vs. Holt-Winters."
+        f"✅ Entre 2026 y 2031, se proyectaron **{diferencia_total:,}** ingresantes **adicionales** vs. Holt-Winters."
         if diferencia_total > 0 else
-        f"⚠️ Entre 2026 y 2029, hay **{abs(diferencia_total):,}** ingresantes **menos** que los esperados según Holt-Winters."
+        f"⚠️ Entre 2026 y 2031, hay **{abs(diferencia_total):,}** ingresantes **menos** que los esperados según Holt-Winters."
     )
-    st.markdown(f"### 📌 Diferencia acumulada 2026–2029:\n{mensaje_dif}")
+    st.markdown(f"### 📌 Diferencia acumulada 2026–2031:\n{mensaje_dif}")
 
 st.subheader("📋 Tabla de resultados (principales)")
 st.dataframe(df[['Anio', 'Matriculados', 'Graduados_Proyectados', 'Nuevos_Medicos', 'Medicos_Acumulados']].round(0))
 
+# ⬇️ CAMBIO: subheader y rango hasta 2031
 if mostrar_detalle and not df_dif.empty:
-    st.subheader("📊 Comparación año a año vs HW (2026–2029)")
+    st.subheader("📊 Comparación año a año vs HW (2026–2031)")
     st.dataframe(df_dif.round(0))
 
 # ------------------------------------------------------------
@@ -339,10 +343,9 @@ with st.expander("ℹ️ ¿Cómo se calcula?"):
 with st.expander("📝 Notas de interpretación"):
     st.info("""
 - Las proyecciones cambian si se modifican las tasas o la meta.
-- Una diferencia alta vs. HW en 2026–2029 no implica “mejor/peor”: refleja que **se ajustaron** las cohortes para cumplir la meta.
+- Una diferencia alta vs. HW en 2026–2031 no implica “mejor/peor”: refleja que **se ajustaron** las cohortes para cumplir la meta.
 """)
 
 with st.expander("🔎 Chequeo 2025 ↔ 2029"):
     cols = ['Anio','Matriculados','Cohorte','Graduados','Graduados_Proyectados','Nuevos_Medicos']
     st.dataframe(df.loc[df['Anio'].isin([2025,2029]), cols])
-
