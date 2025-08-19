@@ -19,7 +19,7 @@ tasa_cotizacion = st.sidebar.slider("📈 Tasa de graduados que comienzan a coti
 base_exponencial = st.sidebar.slider("📊 Base de distribución exponencial (2032–2035)", 1.00, 1.30, 1.05, 0.01)
 
 # Cargar datos
-archivo_csv = "C:/Users/wsand/Dropbox/MINSALUD/2025/Julio/medicina_graduados_primer_curso/data_medicina_graduado.csv"
+archivo_csv = "https://raw.githubusercontent.com/Wilsonsr/Metodos-Estadisticos/refs/heads/main/data_medicina_graduado.csv"
 df = pd.read_csv(archivo_csv)
 df.columns = ['Anio', 'Poblacion', 'Matriculados', 'Graduados', 'Medicos_Totales',
               'Poblacion_y', 'Densidad_Medicos', 'Variacion_Medicos', 'Variacion_Porc_Medicos']
