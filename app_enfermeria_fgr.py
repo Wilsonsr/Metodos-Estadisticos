@@ -13,9 +13,9 @@ st.title("Proyección de Ingresantes, Titulados y Nuevos Profesionales en Enferm
 
 # Parámetros (alineado al flujo de Medicina, pero con L=4 y ancla 2029)
 st.sidebar.header("🎯 Parámetros de Proyección")
-densidad_objetivo = st.sidebar.slider("👩‍⚕️ Densidad deseada (profesionales por 1.000 habitantes en 2035)", 1.0, 3.0, 2.0, 0.05)
+densidad_objetivo = st.sidebar.slider("👩‍⚕️ Densidad deseada (profesionales por 1.000 habitantes en 2035)", 1.0, 3.0, 2.2, 0.05)
 tasa_graduacion = st.sidebar.slider("🎓 Tasa de titulación (ingresantes que se titulan luego de 4 años)", 0.5, 1.0, 0.80, 0.01)
-tasa_cotizacion = st.sidebar.slider("📈 Tasa de titulados que comienzan a cotizar", 0.3, 1.0, 0.70, 0.01)
+tasa_cotizacion = st.sidebar.slider("📈 Tasa de titulados que comienzan a cotizar", 0.3, 1.0, 0.60, 0.01)
 base_exponencial = st.sidebar.slider("📊 Base de distribución exponencial (2030–2035)", 1.00, 1.30, 1.05, 0.01)
 
 st.sidebar.markdown("---")
