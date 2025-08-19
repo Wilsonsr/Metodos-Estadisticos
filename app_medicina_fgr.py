@@ -15,8 +15,11 @@ st.title("Proyección de Matriculados, Graduados y Nuevos Médicos en Medicina (
 st.sidebar.header("🎯 Parámetros de Proyección")
 densidad_objetivo = st.sidebar.slider("👨‍⚕️ Densidad deseada (médicos por 1.000 habitantes en 2035)", 3.0, 4.0, 3.7, 0.05)
 tasa_graduacion = st.sidebar.slider("🎓 Tasa de graduación (matriculados que se gradúan luego de 6 años)", 0.5, 1.0, 0.8, 0.01)
-tasa_cotizacion = st.sidebar.slider("📈 Tasa de graduados que comienzan a cotizar", 0.5, 1.0, 0.9, 0.01)
+tasa_cotizacion = st.sidebar.slider("📈 Tasa de graduados que comienzan a cotizar", 0.5, 1.0, 0.7, 0.01)
 base_exponencial = st.sidebar.slider("📊 Base de distribución exponencial (2032–2035)", 1.00, 1.30, 1.05, 0.01)
+
+st.sidebar.markdown("---")
+mostrar_detalle = st.sidebar.checkbox("Mostrar detalles técnicos (HW y sombreados)", value=False)
 
 # ------------------------------------------------------------
 # Cargar datos
@@ -29,36 +32,24 @@ df.columns = ['Anio', 'Poblacion', 'Matriculados', 'Graduados', 'Medicos_Totales
               'Poblacion_y', 'Densidad_Medicos', 'Variacion_Medicos', 'Variacion_Porc_Medicos']
 df = df.sort_values('Anio').drop_duplicates('Anio', keep='last').reset_index(drop=True)
 
-# Convertir a numérico (evita NaN por texto)
+# A números (evita NaN por texto con comas)
 cols_num = ['Poblacion','Matriculados','Graduados','Medicos_Totales',
             'Poblacion_y','Densidad_Medicos','Variacion_Medicos','Variacion_Porc_Medicos']
 for c in cols_num:
     if c in df.columns:
         df[c] = pd.to_numeric(df[c], errors='coerce')
 
-# Recalcular densidad por 1.000 (coherencia)
+# Coherencia: densidad por 1.000 (si se usa luego)
 df['Densidad_Medicos'] = (df['Medicos_Totales'] / df['Poblacion']) * 1000
 
-# ------------------------------------------------------------
-# Si faltan 2024/2025 se crean; si existen, NO se tocan
-# ------------------------------------------------------------
+# Si faltan 2024/2025 se crean; si existen en archivo, NO se tocan
 if 2023 in df['Anio'].values:
     mat_2023 = df.loc[df['Anio'] == 2023, 'Matriculados'].iloc[0]
     pob_2023 = df.loc[df['Anio'] == 2023, 'Poblacion'].iloc[0]
-
     if 2024 not in df['Anio'].values:
-        df = pd.concat([df, pd.DataFrame([{
-            'Anio': 2024,
-            'Matriculados': mat_2023 * 1.02,
-            'Poblacion': pob_2023 * 1.01
-        }])], ignore_index=True)
-
+        df = pd.concat([df, pd.DataFrame([{'Anio': 2024, 'Matriculados': mat_2023 * 1.02, 'Poblacion': pob_2023 * 1.01}])], ignore_index=True)
     if 2025 not in df['Anio'].values:
-        df = pd.concat([df, pd.DataFrame([{
-            'Anio': 2025,
-            'Matriculados': mat_2023 * (1.02**2),
-            'Poblacion': pob_2023 * (1.01**2)
-        }])], ignore_index=True)
+        df = pd.concat([df, pd.DataFrame([{'Anio': 2025, 'Matriculados': mat_2023 * (1.02**2), 'Poblacion': pob_2023 * (1.01**2)}])], ignore_index=True)
 
 df = df.sort_values('Anio').drop_duplicates('Anio', keep='last').reset_index(drop=True)
 
@@ -143,7 +134,6 @@ for anio in anios_meta:
 # ------------------------------------------------------------
 df['Medicos_Acumulados'] = np.nan
 df.loc[df['Anio'] == 2031, 'Medicos_Acumulados'] = base_2031
-
 for year in range(2032, int(df['Anio'].max()) + 1):
     if (df['Anio'] == year - 1).any() and (df['Anio'] == year).any():
         prev = df.loc[df['Anio'] == year - 1, 'Medicos_Acumulados'].values[0]
@@ -151,13 +141,27 @@ for year in range(2032, int(df['Anio'].max()) + 1):
         if pd.notna(prev) and pd.notna(add):
             df.loc[df['Anio'] == year, 'Medicos_Acumulados'] = prev + add
 
-# Recalcular densidad lograda por coherencia más adelante
 df = df.sort_values('Anio').reset_index(drop=True)
 
 # ------------------------------------------------------------
-# Holt-Winters para mostrar línea de referencia (no inyecta salvo 2025)
+# Narrativa y KPIs (lenguaje común)
 # ------------------------------------------------------------
-# df_hw ya tiene Matriculados_HW si hubo datos suficientes
+st.markdown(f"""
+
+- **Matriculados en Primer curso**: estudiantes que entran cada año.  
+- **Graduados**: estudiantes que egresan 6 años después de su matrícula.  
+- **Nuevos médicos**: graduados que empiezan a **cotizar**.  
+- **2031** depende de la cohorte **2025**. **2032–2035** se ajustan para alcanzar la **densidad objetivo** ({densidad_objetivo} por 1.000).
+""")
+
+c1, c2, c3 = st.columns(3)
+c1.metric("Meta 2035 (médicos)", f"{medicos_necesarios:,}")
+c2.metric("Base 2031", f"{base_2031:,}")
+c3.metric("Faltantes 2032–2035", f"{medicos_faltantes:,}")
+
+# ------------------------------------------------------------
+# Holt-Winters para referencia/ comparación (no inyecta salvo 2025)
+# ------------------------------------------------------------
 df_comp = pd.merge(
     df[['Anio', 'Matriculados']],
     df_hw[['Anio', 'Matriculados_HW']],
@@ -168,64 +172,133 @@ df_dif = df_comp[df_comp['Anio'].between(2026, 2029)]
 diferencia_total = int(df_dif['Diferencia'].dropna().sum()) if not df_dif.empty else 0
 
 # ------------------------------------------------------------
-# Gráfico principal
+# Gráfico principal SEGMENTADO por periodos (estilo cambia por año)
 # ------------------------------------------------------------
 fig = go.Figure()
-fig.add_trace(go.Scatter(x=df['Anio'], y=df['Matriculados'], mode='lines+markers', name='Matriculados', line=dict(color='red')))
-fig.add_trace(go.Scatter(x=df['Anio'], y=df['Graduados_Proyectados'], mode='lines+markers', name='Graduados', line=dict(color='green')))
-fig.add_trace(go.Scatter(x=df['Anio'], y=df['Nuevos_Medicos'], mode='lines+markers', name='Nuevos Médicos', line=dict(color='blue')))
-fig.add_trace(go.Scatter(x=df_hw['Anio'], y=df_hw['Matriculados_HW'], mode='lines+markers', name='Matriculados HW', line=dict(color='orange', dash='dash')))
 
-# Anotaciones Δ 2026–2029
-for _, row in df_dif.dropna(subset=['Diferencia']).iterrows():
-    fig.add_annotation(
-        x=int(row['Anio']),
-        y=float(df.loc[df['Anio'] == int(row['Anio']), 'Matriculados'].values[0]),
-        text=f"Δ={int(row['Diferencia']):+}",
-        showarrow=True, arrowhead=2, arrowsize=1, arrowwidth=1, arrowcolor="gray",
-        ax=0, ay=-40, font=dict(size=12, color="crimson"),
-        bgcolor="white", bordercolor="crimson", borderwidth=1
-    )
+split_matric = 2026   # Matriculados: a partir de aquí son "ajustados" por la meta
+split_meta   = 2032   # Graduados y Nuevos médicos: a partir de aquí son "ajustados"
+
+# --- Matriculados ---
+mat_nat = df[df['Anio'] <= split_matric - 1]
+mat_adj = df[df['Anio'] >= split_matric]
+
+fig.add_trace(go.Scatter(
+    x=mat_nat['Anio'], y=mat_nat['Matriculados'],
+    mode='lines+markers', name='Matriculados (≤ 2025)',
+    line=dict(color='#1f77b4', width=3), marker=dict(size=7, symbol='circle'),
+    legendgroup='mat',
+    hovertemplate="Año %{x}<br>Matriculados: %{y:,.0f}<extra></extra>"
+))
+fig.add_trace(go.Scatter(
+    x=mat_adj['Anio'], y=mat_adj['Matriculados'],
+    mode='lines+markers', name='Matriculados (≥ 2026, ajustados)',
+    line=dict(color='#1f77b4', width=3, dash='dot'), marker=dict(size=7, symbol='square'),
+    legendgroup='mat',
+    hovertemplate="Año %{x}<br>Matriculados (ajustados): %{y:,.0f}<extra></extra>"
+))
+
+# --- Graduados ---
+grad_nat = df[df['Anio'] <= split_meta - 1]
+grad_adj = df[df['Anio'] >= split_meta]
+
+fig.add_trace(go.Scatter(
+    x=grad_nat['Anio'], y=grad_nat['Graduados_Proyectados'],
+    mode='lines+markers', name='Graduados (≤ 2031)',
+    line=dict(color='#2ca02c', width=3), marker=dict(size=7, symbol='circle'),
+    legendgroup='grad',
+    hovertemplate="Año %{x}<br>Graduados: %{y:,.0f}<extra></extra>"
+))
+fig.add_trace(go.Scatter(
+    x=grad_adj['Anio'], y=grad_adj['Graduados_Proyectados'],
+    mode='lines+markers', name='Graduados (≥ 2032, ajustados)',
+    line=dict(color='#2ca02c', width=3, dash='dot'), marker=dict(size=7, symbol='square'),
+    legendgroup='grad',
+    hovertemplate="Año %{x}<br>Graduados (ajustados): %{y:,.0f}<extra></extra>"
+))
+
+# --- Nuevos médicos ---
+nm_nat = df[df['Anio'] <= split_meta - 1]
+nm_adj = df[df['Anio'] >= split_meta]
+
+fig.add_trace(go.Scatter(
+    x=nm_nat['Anio'], y=nm_nat['Nuevos_Medicos'],
+    mode='lines+markers', name='Nuevos médicos (≤ 2031)',
+    line=dict(color='#ff7f0e', width=3), marker=dict(size=7, symbol='circle'),
+    legendgroup='nuevo',
+    hovertemplate="Año %{x}<br>Nuevos médicos: %{y:,.0f}<extra></extra>"
+))
+fig.add_trace(go.Scatter(
+    x=nm_adj['Anio'], y=nm_adj['Nuevos_Medicos'],
+    mode='lines+markers', name='Nuevos médicos (≥ 2032, ajustados)',
+    line=dict(color='#ff7f0e', width=3, dash='dot'), marker=dict(size=7, symbol='square'),
+    legendgroup='nuevo',
+    hovertemplate="Año %{x}<br>Nuevos médicos (ajustados): %{y:,.0f}<extra></extra>"
+))
+
+# --- Línea HW (opcional si activaste "mostrar_detalle") ---
+if mostrar_detalle:
+    fig.add_trace(go.Scatter(
+        x=df_hw['Anio'], y=df_hw['Matriculados_HW'],
+        mode='lines+markers', name='Matriculados (HW)',
+        line=dict(color='#9467bd', width=2, dash='dash'),
+        marker=dict(size=6, symbol='diamond'),
+        legendgroup='hw',
+        hovertemplate="Año %{x}<br>HW: %{y:,.0f}<extra></extra>"
+    ))
+
+# --- Zonas y líneas guía (si quieres mantenerlas) ---
+if mostrar_detalle:
+    fig.add_vrect(x0=df['Anio'].min(), x1=2024, fillcolor="lightgray", opacity=0.07, layer="below", line_width=0,
+                  annotation_text="Observado", annotation_position="top left")
+    fig.add_vrect(x0=2025, x1=2031, fillcolor="lightblue", opacity=0.07, layer="below", line_width=0,
+                  annotation_text="Proyección natural (HW)", annotation_position="top left")
+    fig.add_vrect(x0=2032, x1=2035, fillcolor="lightgreen", opacity=0.07, layer="below", line_width=0,
+                  annotation_text="Proyección por meta", annotation_position="top left")
 
 y_max = float(np.nanmax(df[['Matriculados','Graduados_Proyectados','Nuevos_Medicos']].values)) if len(df) else 0.0
 if not np.isfinite(y_max): y_max = 0.0
 
+fig.add_vline(x=2031, line_width=1, line_dash="dot", line_color="gray")
+#fig.add_annotation(x=2031, y=y_max*0.95, text="Base acumulada conocida (2031)", showarrow=False, bgcolor="white")
+
 fig.update_layout(
-    title="📊 Proyección de Matriculados, Graduados y Nuevos Médicos (por 1.000 hab.)",
+    title="Proyección de Matriculados, Graduados y Nuevos Médicos (por 1.000 hab.)",
     xaxis_title="Año",
-    yaxis_title="Número de Personas",
+    yaxis_title="Número de personas",
     height=600,
-    yaxis=dict(tickformat=",d"),
-    shapes=[
-        dict(type="line", x0=2026, x1=2026, y0=0, y1=y_max, line=dict(color="gray", dash="dot"), xref='x', yref='y'),
-        dict(type="line", x0=2032, x1=2032, y0=0, y1=y_max, line=dict(color="gray", dash="dot"), xref='x', yref='y')
-    ]
+    hovermode="x unified",
+    legend_title_text="Series",
+    font=dict(size=14),
+    yaxis=dict(tickformat=",d", rangemode="tozero"),
+    margin=dict(l=40, r=20, t=80, b=40)
 )
+
 st.plotly_chart(fig, use_container_width=True)
 
+
 # ------------------------------------------------------------
-# Mensajes
+# Mensajes y tablas
 # ------------------------------------------------------------
 st.markdown(f"""
 ### 🧮 Médicos requeridos en 2035 para alcanzar {densidad_objetivo} por **1.000** hab:
 ### 👉 **{medicos_necesarios:,}** médicos necesarios en total
 """)
 
-mensaje_dif = (
-    f"✅ Entre 2026 y 2029, se proyectaron **{diferencia_total:,}** matriculados **adicionales** respecto al modelo natural (Holt-Winters)."
-    if diferencia_total > 0 else
-    f"⚠️ Entre 2026 y 2029, hay **{abs(diferencia_total):,}** matriculados **menos** que los esperados según Holt-Winters."
-)
-st.markdown(f"### 📌 Diferencia acumulada 2026–2029:\n{mensaje_dif}")
+if mostrar_detalle and not df_dif.empty and df_hw['Matriculados_HW'].notna().any():
+    mensaje_dif = (
+        f"✅ Entre 2026 y 2029, se proyectaron **{diferencia_total:,}** matriculados **adicionales** vs. Holt-Winters."
+        if diferencia_total > 0 else
+        f"⚠️ Entre 2026 y 2029, hay **{abs(diferencia_total):,}** matriculados **menos** que los esperados según Holt-Winters."
+    )
+    st.markdown(f"### 📌 Diferencia acumulada 2026–2029:\n{mensaje_dif}")
 
-# ------------------------------------------------------------
-# Tablas
-# ------------------------------------------------------------
-st.subheader("📊 Comparación año a año (2026–2029)")
-st.dataframe(df_dif.round(0))
-
-st.subheader("📋 Tabla de resultados")
+st.subheader("📋 Tabla de resultados (principales)")
 st.dataframe(df[['Anio', 'Matriculados', 'Graduados_Proyectados', 'Nuevos_Medicos', 'Medicos_Acumulados']].round(0))
+
+if mostrar_detalle and not df_dif.empty:
+    st.subheader("📊 Comparación año a año vs HW (2026–2029)")
+    st.dataframe(df_dif.round(0))
 
 # ------------------------------------------------------------
 # Descarga a Excel
@@ -243,43 +316,25 @@ st.download_button(
     mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 )
 
-# ------------------------------------------------------------
-# Densidad lograda (por 1.000)
-# ------------------------------------------------------------
-df['Total_Estimado'] = np.where(df['Anio'] <= 2031, df['Medicos_Totales'], df['Medicos_Acumulados'])
-df['Total_Estimado'] = df['Total_Estimado'].ffill()
-df['Densidad_Lograda'] = (df['Total_Estimado'] / df['Poblacion']) * 1000
 
-st.subheader("📈 Densidad lograda por 1.000 habitantes")
-fig_den = go.Figure()
-df_den = df[~df['Densidad_Lograda'].isna()]
-
-fig_den.add_trace(go.Scatter(
-    x=df_den['Anio'], y=df_den['Densidad_Lograda'],
-    mode='lines+markers', name='Densidad lograda (por 1.000)'
-))
-fig_den.add_trace(go.Scatter(
-    x=df['Anio'], y=[densidad_objetivo] * len(df),
-    mode='lines', name=f'Objetivo {densidad_objetivo} por 1.000', line=dict(dash='dot')
-))
-if (df['Anio'] == 2035).any() and pd.notna(df.loc[df['Anio'] == 2035, 'Densidad_Lograda']).all():
-    dens_2035 = float(df.loc[df['Anio'] == 2035, 'Densidad_Lograda'].values[0])
-    fig_den.add_annotation(
-        x=2035, y=dens_2035, text=f"2035: {dens_2035:.2f} por 1.000",
-        showarrow=True, arrowhead=2, ax=0, ay=-40, bgcolor="white"
-    )
-
-fig_den.update_layout(
-    title="Evolución de la densidad lograda (por 1.000 hab.)",
-    xaxis_title="Año",
-    yaxis_title="Densidad (por 1.000 hab.)",
-    height=450
-)
-st.plotly_chart(fig_den, use_container_width=True)
 
 # ------------------------------------------------------------
-# Diagnóstico rápido (útil para verificar 2025 → 2031)
+# Ayuda contextual
 # ------------------------------------------------------------
+with st.expander("ℹ️ ¿Cómo se calcula?"):
+    st.markdown(f"""
+- **Graduados** del año *t* ≈ **Matriculados** de *t-6* × tasa de graduación.
+- **Nuevos médicos** del año *t* = Graduados × tasa de cotización.
+- **2031** usa la cohorte **2025**; **2032–2035** se ajustan para alcanzar la **densidad** meta ({densidad_objetivo} por 1.000).
+- La línea **HW** es una referencia automática (suavizamiento); solo se usa para **rellenar 2025** si faltara.
+""")
+
+with st.expander("📝 Notas de interpretación"):
+    st.info("""
+- Las proyecciones cambian si se modifican las tasas o la meta.
+- Una diferencia alta vs. HW en 2026–2029 no implica “mejor/peor”: refleja que **se ajustaron** las cohortes para cumplir la meta.
+""")
+
 with st.expander("🔎 Chequeo 2025 ↔ 2031"):
     cols = ['Anio','Matriculados','Cohorte','Graduados','Graduados_Proyectados','Nuevos_Medicos']
     st.dataframe(df.loc[df['Anio'].isin([2025,2031]), cols])
