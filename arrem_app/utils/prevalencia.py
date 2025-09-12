@@ -86,30 +86,36 @@ def graficar_prevalencia_interactiva(df, sintoma_seleccionado="Síntoma"):
         yaxis="y2"
     ))
 
+
     fig.update_layout(
-        title=f"{sintoma_seleccionado} con Regresión Lineal",
-        xaxis=dict(title="Año"),
-        yaxis=dict(
-            title="Número de Casos",
-            titlefont=dict(color="deepskyblue"),
-            tickfont=dict(color="deepskyblue"),
-            side="left"
-        ),
-        yaxis2=dict(
-            title="Prevalencia (%)",
-            titlefont=dict(color="red"),
-            tickfont=dict(color="red"),
-            overlaying="y",
-            side="right"
-        ),
-        legend=dict(
-            x=1, y=1,
-            xanchor="right", yanchor="top",
-            bgcolor="rgba(255,255,255,0.7)",
-            bordercolor="black", borderwidth=1
-        ),
-        template="plotly_white"
+    template="plotly_white",
+    title=dict(text=f"{sintoma_seleccionado} con Regresión Lineal", x=0.02, xanchor="left"),
+
+    xaxis=dict(title=dict(text="Año")),
+
+    yaxis=dict(
+        title=dict(text="Número de Casos", font=dict(color="deepskyblue")),
+        tickfont=dict(color="deepskyblue"),
+        side="left"
+    ),
+
+    yaxis2=dict(
+        title=dict(text="Prevalencia (%)", font=dict(color="red")),
+        tickfont=dict(color="red"),
+        overlaying="y",
+        side="right",
+        anchor="x"
+    ),
+
+    legend=dict(
+        x=1, y=1, xanchor="right", yanchor="top",
+        bgcolor="rgba(255,255,255,0.7)",
+        bordercolor="black", borderwidth=1
+        ) 
     )
+
+
+    
 
     st.plotly_chart(fig)
 
