@@ -115,7 +115,30 @@ def graficar_prevalencia_interactiva(df, sintoma_seleccionado="Síntoma"):
     )
 
 
-    
+        # ... tus add_trace() y tu fig.update_layout(...) van aquí ...
+
+    # === ANOTACIÓN CON LA ECUACIÓN (LaTeX) ===
+    m, b = slope, intercept
+    r2 = r_value**2
+    signo = "+" if b >= 0 else "-"
+    b_abs = abs(b)
+
+    eq_latex = rf"$\hat{{y}} \;=\; {m:.3f}\,x \; {signo} \; {b_abs:.3f}\quad (R^2 = {r2:.4f})$"
+
+    fig.add_annotation(
+        x=0.99, y=0.02, xref="paper", yref="paper",
+        text=eq_latex,
+        showarrow=False,
+        align="right",
+        bgcolor="rgba(255,255,255,0.85)",
+        bordercolor="black",
+        borderwidth=1,
+        font=dict(size=12)
+    )
+
+    # Render en Streamlit
+    st.plotly_chart(fig)
+
 
     st.plotly_chart(fig)
 
