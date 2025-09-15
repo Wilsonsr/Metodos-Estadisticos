@@ -137,7 +137,7 @@ def graficar_prevalencia_interactiva(df, sintoma_seleccionado="Síntoma"):
     )
 
     # Render en Streamlit
-    st.plotly_chart(fig)
+    #st.plotly_chart(fig)
 
 
     st.plotly_chart(fig)
