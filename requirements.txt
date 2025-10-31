@@ -4,4 +4,6 @@ numpy
 plotly
 statsmodels
 openpyxl
-
+xlrd   
+pyarrow
+pyxlsb 
