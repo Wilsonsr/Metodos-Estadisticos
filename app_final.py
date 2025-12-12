@@ -306,3 +306,4 @@ if uploaded_file is not None:
         file_name="forestplot_logistica.png",
         mime="image/png"
     )
+
