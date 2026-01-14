@@ -10,7 +10,7 @@ def main():
     
     if archivo:
         df = cargar_datos(archivo)
-        
+    
         if df is not None and not df.empty:
             st.write("Vista previa de los datos:")
             st.write(df.head())
