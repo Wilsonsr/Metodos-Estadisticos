@@ -294,10 +294,12 @@ if uploaded_file is not None:
     ax.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.6)
     ax.axvline(x=1, color="red", linestyle="--", linewidth=1)
 
-    # Renderizar a PNG con bbox_inches='tight' para que el margen izquierdo
-    # se calcule automáticamente según el ancho real de las etiquetas Y
+    # tight_layout reposiciona el eje Y hacia la derecha para que las etiquetas
+    # largas quepan a la izquierda sin quedar pegadas al borde de la figura
+    fig.tight_layout(pad=0.8)
+
     buf_display = io.BytesIO()
-    fig.savefig(buf_display, format="png", dpi=150, bbox_inches="tight")
+    fig.savefig(buf_display, format="png", dpi=150)
     buf_display.seek(0)
     st.image(buf_display, use_container_width=True)
 
