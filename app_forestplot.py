@@ -273,7 +273,6 @@ if uploaded_file is not None:
     ax.set_yticklabels(new_labels)
 
     fig = plt.gcf()
-    fig.subplots_adjust(wspace=0.02)
 
     # Ajuste global del tamaño de letra
     for ax_ in fig.axes:
@@ -295,7 +294,12 @@ if uploaded_file is not None:
     ax.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.6)
     ax.axvline(x=1, color="red", linestyle="--", linewidth=1)
 
-    st.pyplot(fig, use_container_width=True)
+    # Renderizar a PNG con bbox_inches='tight' para que el margen izquierdo
+    # se calcule automáticamente según el ancho real de las etiquetas Y
+    buf_display = io.BytesIO()
+    fig.savefig(buf_display, format="png", dpi=150, bbox_inches="tight")
+    buf_display.seek(0)
+    st.image(buf_display, use_container_width=True)
 
     # 5. Tabla para el informe (p-valor opcional SOLO aquí)
     st.markdown("### 5. Tabla para el informe")
