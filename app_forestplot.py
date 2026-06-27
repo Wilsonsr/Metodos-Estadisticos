@@ -296,7 +296,7 @@ if uploaded_file is not None:
 
     # tight_layout reposiciona el eje Y hacia la derecha para que las etiquetas
     # largas quepan a la izquierda sin quedar pegadas al borde de la figura
-    fig.tight_layout(pad=0.8)
+    fig.tight_layout(pad=0.1)
 
     buf_display = io.BytesIO()
     fig.savefig(buf_display, format="png", dpi=150)
