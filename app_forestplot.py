@@ -248,7 +248,7 @@ if uploaded_file is not None:
         capitalize="capitalize",
         annote=["est_ci_custom"],
         annoteheaders=["OR (IC 95%)"],
-        ylabel="Variable",
+        #ylabel="Variable",
         xlabel="Odds ratio",
         table=True,
         figsize=(fig_width, fig_height)
