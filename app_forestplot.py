@@ -209,9 +209,10 @@ if uploaded_file is not None:
         st.error("Luego de validar ICs, no quedan filas válidas para graficar.")
         st.stop()
 
-    # Columna formateada OR (IC)
+    # Columna formateada OR (IC) — 4 decimales para evitar yticklabels duplicadas
+    # cuando la misma variable aparece en varios grupos con OR muy similares
     df_fp["est_ci_custom"] = df_fp.apply(
-        lambda r: format_or_ci_coma(r["OR"], r["LI 95%"], r["LS 95%"], nd=2),
+        lambda r: format_or_ci_coma(r["OR"], r["LI 95%"], r["LS 95%"], nd=4),
         axis=1
     )
 
@@ -243,6 +244,7 @@ if uploaded_file is not None:
         capitalize="capitalize",
         annote=["est_ci_custom"],
         annoteheaders=["OR (IC 95%)"],
+        ylabel="Variable",
         xlabel="Odds ratio",
         table=True,
         figsize=(fig_width, fig_height)
