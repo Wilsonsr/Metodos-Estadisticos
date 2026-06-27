@@ -209,10 +209,14 @@ if uploaded_file is not None:
         st.error("Luego de validar ICs, no quedan filas válidas para graficar.")
         st.stop()
 
-    # Columna formateada OR (IC) — 4 decimales para evitar yticklabels duplicadas
-    # cuando la misma variable aparece en varios grupos con OR muy similares
+    # 4 decimales internamente para garantizar yticklabels únicas (evita que grupos desaparezcan)
     df_fp["est_ci_custom"] = df_fp.apply(
         lambda r: format_or_ci_coma(r["OR"], r["LI 95%"], r["LS 95%"], nd=4),
+        axis=1
+    )
+    # 2 decimales para mostrar en el gráfico y la tabla
+    df_fp["est_ci_display"] = df_fp.apply(
+        lambda r: format_or_ci_coma(r["OR"], r["LI 95%"], r["LS 95%"], nd=2),
         axis=1
     )
 
@@ -254,6 +258,20 @@ if uploaded_file is not None:
 
     ax = fp.forestplot(df_fp, **fp_kwargs)
 
+    # Reemplazar los 4 decimales del eje Y por 2 decimales para mostrar.
+    # Las posiciones categóricas ya quedaron fijadas con valores únicos (4 dec),
+    # así que cambiar solo el texto mostrado no afecta el grafico.
+    lbl_map = dict(zip(df_fp["est_ci_custom"], df_fp["est_ci_display"]))
+    new_labels = []
+    for lbl in ax.get_yticklabels():
+        text = lbl.get_text()
+        for k4, v2 in lbl_map.items():
+            if k4 in text:
+                text = text.replace(k4, v2)
+                break
+        new_labels.append(text)
+    ax.set_yticklabels(new_labels)
+
     fig = plt.gcf()
     fig.subplots_adjust(wspace=0.02)
 
@@ -281,7 +299,7 @@ if uploaded_file is not None:
 
     # 5. Tabla para el informe (p-valor opcional SOLO aquí)
     st.markdown("### 5. Tabla para el informe")
-    cols_tabla = ["Variable", "est_ci_custom"]
+    cols_tabla = ["Variable", "est_ci_display"]
     if has_group:
         cols_tabla = ["Grupo"] + cols_tabla
 
@@ -292,7 +310,7 @@ if uploaded_file is not None:
 
     tabla_resumen = df_fp[cols_tabla].copy()
     tabla_resumen = tabla_resumen.rename(columns={
-        "est_ci_custom": "Est. (IC 95%)",
+        "est_ci_display": "Est. (IC 95%)",
         "Grupo": "Grupo / Síntoma"
     })
     st.dataframe(tabla_resumen, use_container_width=True)
