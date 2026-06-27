@@ -294,28 +294,7 @@ if uploaded_file is not None:
     ax.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.6)
     ax.axvline(x=1, color="red", linestyle="--", linewidth=1)
 
-    # Mover el eje Y hacia la derecha según el ancho real de las etiquetas
-    fig.canvas.draw()
-    try:
-        renderer = fig.canvas.get_renderer()
-        max_lbl_w = max(
-            (lbl.get_window_extent(renderer).width
-             for lbl in ax.get_yticklabels() if lbl.get_text()),
-            default=0
-        )
-        fig_w_px = fig.get_size_inches()[0] * fig.dpi
-        left_frac = min((max_lbl_w + 15) / fig_w_px, 0.70)
-        pos = ax.get_position()
-        right_edge = pos.x0 + pos.width
-        ax.set_position([left_frac, pos.y0,
-                         max(right_edge - left_frac, 0.20), pos.height])
-    except Exception:
-        pass
-
-    buf_display = io.BytesIO()
-    fig.savefig(buf_display, format="png", dpi=150)
-    buf_display.seek(0)
-    st.image(buf_display, use_container_width=True)
+    st.pyplot(fig, use_container_width=True)
 
     # 5. Tabla para el informe (p-valor opcional SOLO aquí)
     st.markdown("### 5. Tabla para el informe")
